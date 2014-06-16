@@ -149,10 +149,10 @@ apt_get() {
 		shift
 	done
 	local cmd="apt-get install -y$str"
-	if [[ $DRY_RUN=1 ]] ; then
+	if [[ $DRY_RUN = 1 ]] ; then
 		debug "$cmd"
 	else
-		if [[ $DEBUG=1 ]] ; then 
+		if [[ $DEBUG = 1 ]] ; then 
 			debug "$cmd"
 		fi;	
 		$cmd
