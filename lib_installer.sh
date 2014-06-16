@@ -150,7 +150,7 @@ apt_get() {
 	done
 	local cmd="apt-get install -y$str"
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "$cmd"
+		debug "System should execute $cmd"
 	else
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "$cmd"
@@ -217,10 +217,10 @@ alternc_net_get_domain(){
 
 # Encapsulates cp 
 copy(){
-	if [[ $DRY_RUN ]] ; then
+	if [[ $DRY_RUN = 1 ]] ; then
 		debug "# cp $1 $2"
 	else
-		if [[ $DEBUG ]] ; then 
+		if [[ $DEBUG = 1 ]] ; then 
 			debug "cp $1 $2"
 		fi;	
 		cp $1 $2
@@ -236,7 +236,12 @@ write() {
 		if [[ $DEBUG ]] ; then 
 			debug "echo $1 > $2"
 		fi;	
-		echo $1 > $2
+		# resets file content 
+		echo "" > "$2"
+		# echo each text line
+		for l in $(echo "$1"); do 
+			echo $l >> $2
+		done;
 	fi;
 	
 }

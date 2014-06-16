@@ -300,6 +300,17 @@ debconf mysql-server/root_password seen true mysql-server-5.5
 debconf mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD} mysql-server-5.5
 debconf mysql-server/root_password_again seen true mysql-server-5.5
 
+# Inform the user
+info "An important password has just been generated.
+
+It is the mysql root (or master) password.
+
+This password has been stored in the root directory : /root/.my.cnf
+
+For your information this password is : "
+
+warn "  $MYSQL_ROOT_PASSWORD"
+
 # Installs mysql 
 apt_get mysql-server mysql-client
 
