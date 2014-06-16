@@ -10,6 +10,7 @@ if [ ! -f "config.sh" ] ; then
 
 fi;
 
+. "config.sh"
 
 ### Disclaimer 
 
@@ -47,7 +48,10 @@ spacer
 ### Environment info
 
 
-if [[ $DEBUG=1 ]] ; then
+echo "DEBUG $DEBUG";
+echo "DRY RUN $DRY_RUN";
+
+if [[ $DEBUG == 1 ]] ; then
 
 	warn "Debug mode activated."
 	spacer
@@ -55,7 +59,7 @@ if [[ $DEBUG=1 ]] ; then
 fi;
 
 
-if [[ $DRY_RUN=1 ]] ; then
+if [[ $DRY_RUN == 1 ]] ; then
 
 	warn "Dry run mode activated."
 	spacer
