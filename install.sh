@@ -41,7 +41,7 @@ spacer
 ### Environment info
 
 
-if [[ $DEBUG=1 ]] ; then
+if [[ $DEBUG=1 ]] ; then
 
 	warn "Debug mode activated."
 	spacer
@@ -49,7 +49,7 @@ if [[ $DEBUG=1 ]] ; then
 fi;
 
 
-if [[ $DRY_RUN=1 ]] ; then
+if [[ $DRY_RUN=1 ]] ; then
 
 	warn "Dry run mode activated."
 	spacer
