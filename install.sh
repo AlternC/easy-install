@@ -4,6 +4,12 @@
 
 . "lib_installer.sh"
 
+if [ ! -f "config.sh" ] ; then
+
+	cp config.sh.dist config.sh;
+
+fi;
+
 
 ### Disclaimer 
 
