@@ -251,7 +251,7 @@ write() {
 #			This must be an /etc/init.d script name
 check_service() {
 	if [ -z $1 ] ; then
-		alert ("Missing service name $@";
+		alert "Missing service name $@"
 	fi;
 	local service=$1
 	if [ $(prep $1 | wc-l) -eq 0 ] ; then
