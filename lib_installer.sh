@@ -259,7 +259,7 @@ check_service() {
 		alert "Missing service name $@"
 	fi;
 	local service=$1
-	if [ $(pgrep $1 | wc-l) -eq 0 ] ; then
+	if [ $(pgrep $1 | wc -l) -eq 0 ] ; then
 		alert "Service $service is not running"
 	else
 		info "Service $service is running OK"

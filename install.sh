@@ -314,18 +314,15 @@ For your information this password is : "
 
 warn "  $MYSQL_ROOT_PASSWORD"
 
+info "To keep this installer as simple as possible, we're starting with
+an empty password and we'll set up the real password at the end."
+
+
 # Installs mysql 
 apt_get mysql-server mysql-client
 
 # Checks if success : mysql service running 
-check_service apache2
-
-# Checks if success : root access to mysql
-if [ -z $(mysql -uroot --password=$MYSQL_ROOT_PASSWORD -e "select * from mysql.user") ] ; then
-	alert "Something went wrong: Mysql root password is invalid";
-fi;
-
-# Reset to null the mysql root password for now
+check_service mysqld
 
 
 
@@ -411,6 +408,10 @@ if [ ! -f /usr/lib/alternc/alternc.install ] ; then
 	alert "Something went wrong with your installation : alternc.install script  not found."
 fi;
 
+# Sets the real mysql root password 
+
+
+
 # Checks if success : Apache2 running 
 check_service apache2
 
@@ -420,3 +421,4 @@ check_service apache2
 check_service postfix
 
 # Checks if success : xxx running
+
