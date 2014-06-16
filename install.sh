@@ -81,8 +81,6 @@ fi
 
 ## Debconf
 
-# Installs debconf
-apt_get debconf
 
 # Installs dnsutils (mandatory for dig)
 apt_get dnsutils
@@ -162,9 +160,9 @@ read VAR_USE_ALTERNC_SUBDOMAIN
 check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
 
 # Wants to use own domain name
-if [[ -z $check ]] ; then
+if [[ $check=0 ]] ; then
 
-	ask "Please provide your Alternc panel URL  y/n"
+	ask "  Please provide your Alternc panel URL  y/n"
 	read ALTERNC_DESKTOPNAME
 	test_ns ALTERNC_DESKTOPNAME
 	
