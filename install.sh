@@ -409,8 +409,7 @@ if [ ! -f /usr/lib/alternc/alternc.install ] ; then
 fi;
 
 # Sets the real mysql root password 
-
-
+mysql -u root --password="" -e "update mysql.user set Password=PASSWORD('$MYSQL_ROOT_PASSWORD') where user.User = 'root' limit 1;"
 
 # Checks if success : Apache2 running 
 check_service apache2
