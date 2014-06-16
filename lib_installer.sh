@@ -245,3 +245,18 @@ write() {
 	fi;
 	
 }
+
+# Attempts to check if a service is currently running 
+# @param 1 	the service name ex: mysqld
+#			This must be an /etc/init.d script name
+check_service() {
+	if [ -z $1 ] ; then
+		alert ("Missing service name $@";
+	fi;
+	local service=$1
+	if [ $(prep $1 | wc-l) -eq 0 ] ; then
+		alert "Service $service is not running"
+	else
+		info "Service $service is running OK"
+	fi;	
+}
