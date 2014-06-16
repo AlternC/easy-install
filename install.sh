@@ -13,7 +13,7 @@ You should have received a copy of the Licence, otherwise it is available
 on https://www.gnu.org/copyleft/gpl.html. 
 This script is  provided without warranty of any kind, either expressed 
 or implied. In no event shall our juridical person be liable for any 
-damages including, but not limited to, direct, indirect, special, 
+damages incsluding, but not limited to, direct, indirect, special, 
 incidental or consequential damages or other losses arising out of the 
 use of or inability to use our products.
 ... yada yada yada ..."
@@ -34,10 +34,27 @@ something more specific you might prefer a custom installation.
 To learn more about the choices made for this installer, please read 
 http://www.alternc.org/simpleInstaller";
 
-#try_exit
+try_exit
 
 spacer
 
+### Environment info
+
+
+if [[ $DEBUG=1 ]] ; then
+
+	warn "Debug mode activated."
+	spacer
+
+fi;
+
+
+if [[ $DRY_RUN=1 ]] ; then
+
+	warn "Dry run mode activated."
+	spacer
+
+fi;
 
 ### Installer prequisites
 
@@ -66,6 +83,16 @@ fi
 
 # Installs debconf
 apt_get debconf
+
+# Installs dnsutils (mandatory for dig)
+apt_get dnsutils
+ 
+# Installs inetutils-ping 
+apt_get inetutils-ping
+
+# Installs pwgen password generator
+apt_get pwgen
+
 
 
 
@@ -108,7 +135,6 @@ if [[ "0" = "$check" ]] ; then
 else
 	ALTERNC_NS1="ns1.alternc.net"
 	ALTERNC_NS2="ns2.alternc.net"
-
 fi
 
 

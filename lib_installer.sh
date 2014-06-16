@@ -162,7 +162,7 @@ apt_get() {
 test_ns() {
 	local NS=$1
 	if [ -z $NS1 ] ; then
-		warn "$1 is not a valid domain name"
+		warn "missing domain name"
 	fi;
 	local DIG=$(dig +short A $NS|wc -l)
 	if [ -z $DIG ] ; then
