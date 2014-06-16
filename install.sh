@@ -298,8 +298,8 @@ database=alternc" /root/.my.cnf
 # Preseeds mysql server root password
 ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 
-debconf mysql-server/root_password password ${MYSQL_ROOT_PASSWORD} mysql-server-5.5
-debconf mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD} mysql-server-5.5
+debconf mysql-server/root_password password $MYSQL_ROOT_PASSWORD mysql-server-5.5
+debconf mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD mysql-server-5.5
 
 # Inform the user
 info "An important password has just been generated.

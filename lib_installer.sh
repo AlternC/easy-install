@@ -4,6 +4,11 @@ ALTERNC_VERSION="Alternc 3.2"
 DEBIAN_VERSION="Wheezy Debian"
 DEBIAN_VERSION_NUMBER="7"
 
+# translations
+# @see http://mywiki.wooledge.org/BashFAQ/098
+export TEXTDOMAIN=alternc-easy-install
+export TEXTDOMAINDIR=$(pwd)/translations
+
 COL_GRAY="\x1b[30;01m"
 COL_RED="\x1b[31;01m"
 COL_GREEN="\x1b[32;01m"
@@ -66,7 +71,7 @@ debug() {
 
 	echo -e $COL_PURPLE;
 	local format=$1
-	printf "$(gettext -s "$format")" "$@" >&1
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
 	echo -e $COL_RESET;
 }
 
@@ -74,14 +79,14 @@ misc() {
 	
 	echo -e $COL_GRAY;
 	local format=$1
-	printf "$(gettext -s "$format")" "$@" >&1
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
 	echo -e $COL_RESET;
 
 }
 ask() {
 	echo -e $COL_WHITE;
 	local format="$1"
-	printf "$(gettext -s "$format")" "$@" >&1
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
 	echo -e $COL_RESET;
 
 }
@@ -96,8 +101,8 @@ spacer() {
 info() {
 	
 	echo -e $COL_GREEN;
-	local format=$1
-	printf "$(gettext -s "$format")" "$@"
+	local format=$@
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@"
 	echo -e $COL_RESET;
 
 }
@@ -107,7 +112,7 @@ warn() {
 	echo -e $COL_RED;
 	local format=$1
 	shift
-	printf "$(gettext -s "$format")" "$@" >&1
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
 	echo -e $COL_RESET;
 
 }
@@ -118,7 +123,7 @@ alert() {
 	local format=$1
 	shift
 	printf "\nA critical error occured: " >&2
-	printf "$(gettext -s "$format")" "$@" >&2
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&2
 	printf "\nExiting. " >&2
 	echo -e $COL_RESET;
 	exit $E_CDERROR
@@ -127,11 +132,10 @@ alert() {
 
 try_exit() {
 	if [ -z $1 ] ; then
-		msg="Do you want to exit the installer? (enter y to exit) "
+		ask "Do you want to exit the installer? (enter y to exit) "
 	else
-		msg=$1;
+		ask $1;
 	fi;
-	echo $msg;
 	read VAR_SKIP;
 	if [[ "y" == ${VAR_SKIP,,} || "o" == ${VAR_SKIP,,} ]] ; 
 		then echo "Exiting";
