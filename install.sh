@@ -48,9 +48,6 @@ spacer
 ### Environment info
 
 
-echo "DEBUG $DEBUG";
-echo "DRY RUN $DRY_RUN";
-
 if [[ $DEBUG == 1 ]] ; then
 
 	warn "Debug mode activated."
