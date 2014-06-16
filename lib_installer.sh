@@ -195,13 +195,17 @@ debconf() {
 	else 
 		database="$3"	
 	fi;
-	if [[ $DRY_RUN ]] ; then
-		debug "# debconf $1 $2 $3"
+	debug "database $database"
+	if [[ $DRY_RUN == 1 ]] ; then
+		debug "# debconf $database $1 $2"
 	else
-		if [[ $DEBUG ]] ; then 
-			debug "debconf $1 $2 $3"
+		if [[ $DEBUG == 1 ]] ; then 
+			debug "debconf $database $1 $2"
 		fi;	
+		# sets the selection
 		echo "$database $1 $2" | debconf-set-selections
+		# marks the selection as read
+		echo "$database $1 seen true" | debconf-set-selections
 	fi;
 }
 
