@@ -1,0 +1,188 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-17 00:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: install.sh:17
+msgid ""
+"#################################################### Licence ###########\n"
+"This script is licenced under the Gnu Public Licence v3.\n"
+"You should have received a copy of the Licence, otherwise it is available\n"
+"on https://www.gnu.org/copyleft/gpl.html. \n"
+"This script is  provided without warranty of any kind, either expressed \n"
+"or implied. In no event shall our juridical person be liable for any \n"
+"damages incsluding, but not limited to, direct, indirect, special, \n"
+"incidental or consequential damages or other losses arising out of the \n"
+"use of or inability to use our products.\n"
+"... yada yada yada ..."
+msgstr ""
+
+#: install.sh:53
+msgid "Debug mode activated."
+msgstr ""
+
+#: install.sh:61
+msgid "Dry run mode activated."
+msgstr ""
+
+#: install.sh:72
+msgid ""
+"You must be root, please authentificate with your user password or run as "
+"root"
+msgstr ""
+
+#: install.sh:77
+msgid "Not a DEBIAN system (missing /etc/debian_version)"
+msgstr ""
+
+#: install.sh:85
+msgid "This machine is not connected to Internet."
+msgstr ""
+
+#: install.sh:110
+msgid ""
+"Your Alternc server needs a public IP Address to be available on \n"
+"the web from everywhere in the world."
+msgstr ""
+
+#: install.sh:113
+msgid "For your information, here are the internet addresses of this machine:"
+msgstr ""
+
+#: install.sh:119
+msgid "Please provide the public IP address"
+msgstr ""
+
+#: install.sh:134
+msgid ""
+"Having Domain Name Servers is mandatory for your alternc instance.\n"
+"\n"
+"Name servers are used to distribute informations about the domain names.\n"
+"\n"
+"Don't know what that means? Or do not have name servers you can use?\n"
+"\n"
+"We advice you to use the service provided by the alternc team.\n"
+"\n"
+"This service is free. Learn more on http://alternc.net."
+msgstr ""
+
+#: install.sh:144
+msgid "Do you want to use Alternc.net name servers ? y/n"
+msgstr ""
+
+#: install.sh:153
+msgid "You need two valid nameservers :"
+msgstr ""
+
+#: install.sh:155
+msgid "  Please provide your primary NS server"
+msgstr ""
+
+#: install.sh:159
+msgid "  Please provide your secondary NS server"
+msgstr ""
+
+#: install.sh:175
+msgid ""
+"The Alternc panel requires an URL for web access. If you own only \n"
+"one domaine name which is intended to be your own website, you \n"
+"should be careful about NOT choosing this domain name as the Alternc URL.\n"
+"\n"
+"Simply create a subdomain dedicated to alternc like alternc.example.com\n"
+"\n"
+"You can also choose to use a domain name provided by your hoster or \n"
+"directly the IP address of your server, but this is not a good solution.\n"
+"\n"
+"Don't know much about DNS? The Alternc team  provides a free service \n"
+"for you: you get your own alternc.net subdomain, point it to this server\n"
+"IP and use it as your Alternc panel URL."
+msgstr ""
+
+#: install.sh:188
+msgid ""
+"Would you like to use the free alternc.net panel subdomain name service?  y/n"
+msgstr ""
+
+#: install.sh:197
+msgid "  Please provide your Alternc panel URL"
+msgstr ""
+
+#: install.sh:215
+msgid ""
+"\n"
+"Roundcube is the webmail software proposed by alternc.\n"
+"\n"
+"We recommand adding it to your installation.\n"
+msgstr ""
+
+#: install.sh:221
+msgid "Would you like to install Roundcube? (y/n)"
+msgstr ""
+
+#: install.sh:238
+msgid ""
+"\n"
+"Mailman is the mailing list software proposed by alternc.\n"
+msgstr ""
+
+#: install.sh:242
+msgid "Would you like to install Mailman? (y/n)"
+msgstr ""
+
+#: install.sh:269
+msgid "Editing and backuping your /etc/fstab file"
+msgstr ""
+
+#: install.sh:305
+msgid ""
+"An important password has just been generated.\n"
+"\n"
+"It is the mysql root (or master) password.\n"
+"\n"
+"This password has been stored in the root directory : /root/.my.cnf\n"
+"\n"
+"For your information this password is : "
+msgstr ""
+
+#: install.sh:315
+msgid ""
+"To keep this installer as simple as possible, we're starting with\n"
+"an empty password and we'll set up the real password at the end."
+msgstr ""
+
+#: install.sh:351
+msgid "Something went wrong, could not find the alternc package in the sources"
+msgstr ""
+
+#: install.sh:406
+msgid ""
+"Something went wrong with your installation : alternc.install script  not "
+"found."
+msgstr ""
+
+#: lib_installer.sh:74 lib_installer.sh:82 lib_installer.sh:89
+#: lib_installer.sh:105 lib_installer.sh:115 lib_installer.sh:126
+msgid "-d"
+msgstr ""
+
+#: lib_installer.sh:135
+msgid "Do you want to exit the installer? (enter y to exit) "
+msgstr ""
+
+#: lib_installer.sh:169
+msgid "missing domain name"
+msgstr ""
