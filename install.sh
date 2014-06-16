@@ -103,6 +103,30 @@ apt_get pwgen
 
 ### User inputs
 
+## IP
+
+spacer
+
+info "Your Alternc server needs a public IP Address to be available on 
+the web from everywhere in the world."
+
+misc "For your information, here are the internet addresses of this machine:"
+
+for ip in  $(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
+	misc "   $ip"
+done;
+
+ask "Please provide the public IP address"
+
+read ALTERNC_PUBLIC_IP
+
+ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
+
+# Checks if it works
+
+test_local_ip $ALTERNC_PUBLIC_IP
+
+
 ## DNS
 
 # Asks if user wants to use the alternc services for DNS
@@ -172,7 +196,7 @@ if [[ $check=0 ]] ; then
 
 	ask "  Please provide your Alternc panel URL"
 	read ALTERNC_DESKTOPNAME
-	test_ns ALTERNC_DESKTOPNAME
+	test_ns $ALTERNC_DESKTOPNAME
 	
  
 # run the alterc.net api client
@@ -180,29 +204,6 @@ else
 	alternc_net_get_domain
 fi
 
-
-## IP
-
-spacer
-
-info "Your Alternc server needs a public IP Address to be available on 
-the web from everywhere in the world."
-
-misc "For your information, here are the internet addresses of this machine:"
-
-for ip in  $(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
-	misc "   $ip"
-done;
-
-ask "Please provide the public IP address"
-
-read ALTERNC_PUBLIC_IP
-
-ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
-
-# Checks if it works
-
-test_local_ip $ALTERNC_PUBLIC_IP
 
 
 ## alternc modules 

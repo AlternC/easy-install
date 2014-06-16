@@ -161,14 +161,17 @@ apt_get() {
 
 test_ns() {
 	local NS=$1
-	if [[ -z "$NS1" ]] ; then
+	if [[ -z "$NS" ]] ; then
 		warn "missing domain name"
 	fi;
-	local DIG=$(dig +short A $NS|wc -l)
-	if [[ -z $DIG ]] ; then
-		warn "$1 is not a valid domain name"
+	local cmd="$(dig +short A $NS)"
+	if [[ $cmd = "" ]] ; then
+		warn "$NS is not a valid domain name"
+	else 
+		info "$NS is a valid domain name"
 	fi;
 }
+
 test_local_ip() {
 	local IP="$1"
 	local VALID=0
@@ -201,6 +204,8 @@ debconf() {
 		echo "$database $1 $2" | debconf-set-selections
 	fi;
 }
+
+
 # gatepoint for all 'y,o' user inputs management
 validate() {
 	local VAR=$1
@@ -254,7 +259,7 @@ check_service() {
 		alert "Missing service name $@"
 	fi;
 	local service=$1
-	if [ $(prep $1 | wc-l) -eq 0 ] ; then
+	if [ $(pgrep $1 | wc-l) -eq 0 ] ; then
 		alert "Service $service is not running"
 	else
 		info "Service $service is running OK"
