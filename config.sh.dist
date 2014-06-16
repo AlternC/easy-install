@@ -1,3 +1,7 @@
+# Configure these parameters according to your needs
+
+# Do you want to see verbose information during installation?
 DEBUG=1
-DRY_RUN=1
+# Do you want to simulate all operations to test the process?
+DRY_RUN=0
 
