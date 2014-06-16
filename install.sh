@@ -81,7 +81,7 @@ fi
 
 # Exits if no web access
 if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
-    alert "This comp is not connected to Internet."
+    alert "This machine is not connected to Internet."
 fi
 
 
@@ -116,7 +116,7 @@ We advice you to use the service provided by the alternc team.
 
 This service is free. Learn more on http://alternc.net."
 
-ask "Do you want to use Alternc.net name servers ?"
+ask "Do you want to use Alternc.net name servers ? y/n"
 read VAR_USE_ALTERNC_NS
 
 check=$(validate $VAR_USE_ALTERNC_NS)
@@ -168,7 +168,7 @@ check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
 # Wants to use own domain name
 if [[ $check=0 ]] ; then
 
-	ask "  Please provide your Alternc panel URL  y/n"
+	ask "  Please provide your Alternc panel URL"
 	read ALTERNC_DESKTOPNAME
 	test_ns ALTERNC_DESKTOPNAME
 	
@@ -294,6 +294,11 @@ database=alternc" /root/.my.cnf
 
 # Preseeds mysql server root password
 ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
+
+debconf mysql-server/root_password password ${MYSQL_ROOT_PASSWORD} mysql-server-5.5
+debconf mysql-server/root_password seen true mysql-server-5.5
+debconf mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD} mysql-server-5.5
+debconf mysql-server/root_password_again seen true mysql-server-5.5
 
 # Installs mysql 
 apt_get mysql-server mysql-client

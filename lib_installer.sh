@@ -141,17 +141,18 @@ try_exit() {
 
 ### Various utilities
 
+## wraps apt-get
 apt_get() {
 	local str=""
 	while (( "$#" )); do
 		str="$str $1"
 		shift
 	done
-	local cmd="apt-get install$str"
-	if [[ "$DRY_RUN" = "1" ]] ; then
-		debug $cmd
+	local cmd="apt-get install -y$str"
+	if [[ $DRY_RUN=1 ]] ; then
+		debug "$cmd"
 	else
-		if [[ "$DEBUG" = "1" ]] ; then 
+		if [[ $DEBUG=1 ]] ; then 
 			debug "$cmd"
 		fi;	
 		$cmd
@@ -160,11 +161,11 @@ apt_get() {
 
 test_ns() {
 	local NS=$1
-	if [ -z $NS1 ] ; then
+	if [[ -z "$NS1" ]] ; then
 		warn "missing domain name"
 	fi;
 	local DIG=$(dig +short A $NS|wc -l)
-	if [ -z $DIG ] ; then
+	if [[ -z $DIG ]] ; then
 		warn "$1 is not a valid domain name"
 	fi;
 }
@@ -183,14 +184,21 @@ test_local_ip() {
 # Sets a debconf variable
 # @param 1 var
 # @param 2 value
+# @param 2 database default=alternc
 debconf() {
+	local database;
+	if [ -z $3 ] ; then
+		database="alternc"
+	else 
+		database="$3"	
+	fi;
 	if [[ $DRY_RUN ]] ; then
-		debug "# debconf $1 $2"
+		debug "# debconf $1 $2 $3"
 	else
 		if [[ $DEBUG ]] ; then 
-			debug "debconf $1 $2"
+			debug "debconf $1 $2 $3"
 		fi;	
-		echo "alternc $1 $2" | debconf-set-selections
+		echo "$database $1 $2" | debconf-set-selections
 	fi;
 }
 # gatepoint for all 'y,o' user inputs management
