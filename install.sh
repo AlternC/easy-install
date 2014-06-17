@@ -260,6 +260,7 @@ if [[ -z $check ]] ; then
 
     SOURCES_USE_BACKPORTS=1
     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
+    info "Roundcube added to your configuration"
     
 fi
 
@@ -283,22 +284,79 @@ if [[ -z $check ]] ; then
 
     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
     
+    info "Mailman added to your configuration"
+    
+    # Asks language
+    misc "By default mailman is installed with french and english."
+    ask "Do you want to use french as default language? (y/n)"
+	read MAILMAN_USE_FRENCH
+	check=$(validate $MAILMAN_USE_FRENCH)    
+	
+	# Switches default mailman language to english
+	if [[ $check == 0 ]] ; then
+		ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="en"
+	fi;
+    
 fi
 
 
 
+### Debconf parameters
+
+
+# alternc
+
+debconf alternc/acluninstalled string "$ALTERNC_ACLUNINSTALLED"
+debconf alternc/quotauninstalled string "$ALTERNC_QUOTAUNINSTALLED"
+debconf alternc/desktopname string "$ALTERNC_DESKTOPNAME"
+debconf alternc/hostingname string "$ALTERNC_HOSTINGNAME"
+debconf alternc/ns1 string "$ALTERNC_NS1"
+debconf alternc/ns2 string "$ALTERNC_NS2"
+debconf alternc/alternc_html string "$ALTERNC_ALTERNC_HTML"
+debconf alternc/alternc_mail string "$ALTERNC_ALTERNC_MAIL"
+debconf alternc/alternc_logs string "$ALTERNC_ALTERNC_LOGS"
+debconf alternc/mysql/host string "$ALTERNC_MYSQL_HOST"
+debconf alternc/mysql/db string "$ALTERNC_MYSQL_DB"
+debconf alternc/mysql/user string "$ALTERNC_MYSQL_USER"
+debconf alternc/mysql/remote_user string "$ALTERNC_MYSQL_REMOTE_USER"
+debconf alternc/mysql/password string "$ALTERNC_MYSQL_PASSWORD"
+debconf alternc/mysql/remote_password string "$ALTERNC_MYSQL_REMOTE_PASSWORD"
+debconf alternc/mysql/alternc_mail_user string "$ALTERNC_MYSQL_ALTERNC_MAIL_USER"
+debconf alternc/mysql/alternc_mail_password string "$ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD"
+debconf alternc/mysql/client string "$ALTERNC_MYSQL_CLIENT"
+debconf alternc/sql/backup_type string "$ALTERNC_SQL_BACKUP_TYPE"
+debconf alternc/sql/backup_overwrite string "$ALTERNC_SQL_BACKUP_OVERWRITE"
+debconf alternc/public_ip string "$ALTERNC_PUBLIC_IP"
+debconf alternc/internal_ip string "$ALTERNC_INTERNAL_IP"
+debconf alternc/default_mx string "$ALTERNC_DEFAULT_MX"
+debconf alternc/default_mx2 string "$ALTERNC_DEFAULT_MX2"
+debconf alternc/alternc_location string "$ALTERNC_ALTERNC_LOCATION"
+debconf alternc/monitor_ip string "$ALTERNC_MONITOR_IP"
+debconf alternc/postrm_remove_databases string "$ALTERNC_POSTRM_REMOVE_DATABASES"
+debconf alternc/postrm_remove_datafiles string "$ALTERNC_POSTRM_REMOVE_DATAFILES"
+debconf alternc/postrm_remove_bind string "$ALTERNC_POSTRM_REMOVE_BIND"
+debconf alternc/postrm_remove_mailboxes string "$ALTERNC_POSTRM_REMOVE_MAILBOXES"
+debconf alternc/slaves string "$ALTERNC_SLAVES"
+debconf alternc/use_local_mysql string "$ALTERNC_USE_LOCAL_MYSQL"
+debconf alternc/use_remote_mysql string "$ALTERNC_USE_REMOTE_MYSQL"
+debconf alternc/retry_remote_mysql string "$ALTERNC_RETRY_REMOTE_MYSQL"
+debconf alternc/use_private_ip string "$ALTERNC_USE_PRIVATE_IP"
+debconf alternc/remote_mysql_error string "$ALTERNC_REMOTE_MYSQL_ERROR"
+
+# others
+debconf alternc-mailman/patch-mailman string "$ALTERNC_MAILMAN_PATCH_MAILMAN" alternc-mailman
+debconf mailman/site_languages string "$ALTERNC_MAILMAN_SITE_LANGUAGES" mailman
+debconf mailman/used_languages string "$ALTERNC_MAILMAN_USED_LANGUAGES" mailman
+debconf mailman/default_server_language string "$ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE" mailman
+debconf mailman/create_site_list string "$ALTERNC_MAILMAN_CREATE_SITE_LIST" mailman
+debconf phpmyadmin/reconfigure-webserver string $ALTERNC_PHPMYADMIN_WEBSERVER phpmyadmin
+debconf phpmyadmin/dbconfig-install string $ALTERNC_PHPMYADMIN_DBCONFIG phpmyadmin
+debconf postfix/mailname string $ALTERNC_POSTFIX_MAILNAME postfix
+debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
+debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
+
+
 ### Install alternc prerequisites
-
-## Sets params
-
-# Sets up some default params
-
-debconf phpmyadmin/reconfigure-webserver $ALTERNC_PHPMYADMIN_WEBSERVER phpmyadmin
-debconf phpmyadmin/dbconfig-install $ALTERNC_PHPMYADMIN_DBCONFIG phpmyadmin
-debconf postfix/mailname $ALTERNC_POSTFIX_MAILNAME postfix
-debconf postfix/main_mailer_type $ALTERNC_POSTFIX_MAILERTYPE postfix
-debconf shared/proftpd/inetd_or_standalone $ALTERNC_PROFTPD_STANDALONE proftpd-basic
-
 
 
 ## FS 
@@ -348,8 +406,8 @@ database=alternc" /root/.my.cnf
 # Preseeds mysql server root password
 ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 
-debconf mysql-server/root_password password $MYSQL_ROOT_PASSWORD mysql-server-5.5
-debconf mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD mysql-server-5.5
+debconf mysql-server/root_password string password $MYSQL_ROOT_PASSWORD mysql-server-5.5
+debconf mysql-server/root_password_again string password $MYSQL_ROOT_PASSWORD mysql-server-5.5
 
 # Inform the user
 info "An important password has just been generated.
@@ -402,47 +460,6 @@ if [ -z $(apt-cache search alternc) ] ; then
 fi;
 
 
-### debconf 
-
-# Preseeds debconf variables
-
-debconf alternc/acluninstalled "$ALTERNC_ACLUNINSTALLED"
-debconf alternc/quotauninstalled "$ALTERNC_QUOTAUNINSTALLED"
-debconf alternc/desktopname "$ALTERNC_DESKTOPNAME"
-debconf alternc/hostingname "$ALTERNC_HOSTINGNAME"
-debconf alternc/ns1 "$ALTERNC_NS1"
-debconf alternc/ns2 "$ALTERNC_NS2"
-debconf alternc/alternc_html "$ALTERNC_ALTERNC_HTML"
-debconf alternc/alternc_mail "$ALTERNC_ALTERNC_MAIL"
-debconf alternc/alternc_logs "$ALTERNC_ALTERNC_LOGS"
-debconf alternc/mysql/host "$ALTERNC_MYSQL_HOST"
-debconf alternc/mysql/db "$ALTERNC_MYSQL_DB"
-debconf alternc/mysql/user "$ALTERNC_MYSQL_USER"
-debconf alternc/mysql/remote_user "$ALTERNC_MYSQL_REMOTE_USER"
-debconf alternc/mysql/password "$ALTERNC_MYSQL_PASSWORD"
-debconf alternc/mysql/remote_password "$ALTERNC_MYSQL_REMOTE_PASSWORD"
-debconf alternc/mysql/alternc_mail_user "$ALTERNC_MYSQL_ALTERNC_MAIL_USER"
-debconf alternc/mysql/alternc_mail_password "$ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD"
-debconf alternc/mysql/client "$ALTERNC_MYSQL_CLIENT"
-debconf alternc/sql/backup_type "$ALTERNC_SQL_BACKUP_TYPE"
-debconf alternc/sql/backup_overwrite "$ALTERNC_SQL_BACKUP_OVERWRITE"
-debconf alternc/public_ip "$ALTERNC_PUBLIC_IP"
-debconf alternc/internal_ip "$ALTERNC_INTERNAL_IP"
-debconf alternc/default_mx "$ALTERNC_DEFAULT_MX"
-debconf alternc/default_mx2 "$ALTERNC_DEFAULT_MX2"
-debconf alternc/alternc_location "$ALTERNC_ALTERNC_LOCATION"
-debconf alternc/monitor_ip "$ALTERNC_MONITOR_IP"
-debconf alternc/postrm_remove_databases "$ALTERNC_POSTRM_REMOVE_DATABASES"
-debconf alternc/postrm_remove_datafiles "$ALTERNC_POSTRM_REMOVE_DATAFILES"
-debconf alternc/postrm_remove_bind "$ALTERNC_POSTRM_REMOVE_BIND"
-debconf alternc/postrm_remove_mailboxes "$ALTERNC_POSTRM_REMOVE_MAILBOXES"
-debconf alternc/slaves "$ALTERNC_SLAVES"
-debconf alternc/use_local_mysql "$ALTERNC_USE_LOCAL_MYSQL"
-debconf alternc/use_remote_mysql "$ALTERNC_USE_REMOTE_MYSQL"
-debconf alternc/retry_remote_mysql "$ALTERNC_RETRY_REMOTE_MYSQL"
-debconf alternc/use_private_ip "$ALTERNC_USE_PRIVATE_IP"
-debconf alternc/remote_mysql_error "$ALTERNC_REMOTE_MYSQL_ERROR"
-
 ### Alternc install
 
 # Starts the alternc install 
@@ -452,9 +469,11 @@ apt_get alternc $ADDITIONAL_PACKAGES
 ### Post install
 
 # Run the alternc.install script
-if [ ! -f /usr/lib/alternc/alternc.install ] ; then 
+if [ ! -f /usr/share/alternc/install/alternc.install ] ; then 
     alert "Something went wrong with your installation : alternc.install script  not found."
 fi;
+alternc.install
+
 
 # Sets the real mysql root password 
 mysql -u root --password="" -e "update mysql.user set Password=PASSWORD('$MYSQL_ROOT_PASSWORD') where user.User = 'root' limit 1;"

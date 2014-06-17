@@ -50,7 +50,7 @@ ALTERNC_POSTRM_REMOVE_DATABASES=""
 ALTERNC_POSTRM_REMOVE_DATAFILES=""
 ALTERNC_POSTRM_REMOVE_MAILBOXES=""
 ALTERNC_PUBLIC_IP=""
-ALTERNC_QUOTAUNINSTALLED=FALSE
+ALTERNC_QUOTAUNINSTALLED=false
 ALTERNC_REMOTE_MYSQL_ERROR=""
 ALTERNC_SLAVES=""
 ALTERNC_SQL_BACKUP_OVERWRITE=no
@@ -66,6 +66,12 @@ ALTERNC_PHPMYADMIN_WEBSERVER="apache2"
 ALTERNC_PHPMYADMIN_DBCONFIG="true"
 ALTERNC_POSTFIX_MAILERTYPE="Internet Site"
 ALTERNC_PROFTPD_STANDALONE="standalone"
+ALTERNC_MAILMAN_SITE_LANGUAGES="fr, en"
+ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="fr"
+ALTERNC_MAILMAN_USED_LANGUAGES="fr en"
+ALTERNC_MAILMAN_CREATE_SITE_LIST=""
+ALTERNC_MAILMAN_PATCH_MAILMAN="true"
+
 
 ADDITIONAL_PACKAGES=""
 VAR_SKIP=0
@@ -199,24 +205,24 @@ test_local_ip() {
 }
 # Sets a debconf variable
 # @param 1 var
-# @param 2 value
-# @param 2 database default=alternc
+# @param 2 type
+# @param 3 value
+# @param 4 database default=alternc
 debconf() {
 	local database;
-	if [ -z $3 ] ; then
+	if [ -z $4 ] ; then
 		database="alternc"
 	else 
-		database="$3"	
+		database="$4"	
 	fi;
-	debug "database $database"
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "# debconf $database $1 $2"
+		debug "# debconf $database $1 $2 $3"
 	else
 		if [[ $DEBUG == 1 ]] ; then 
-			debug "debconf $database $1 $2"
+			debug "debconf $database $1 $2 $3"
 		fi;	
 		# sets the selection
-		echo "$database $1 $2" | debconf-set-selections
+		echo "$database $1 $2 $3" | debconf-set-selections
 		# marks the selection as read
 		echo "$database $1 seen true" | debconf-set-selections
 	fi;
