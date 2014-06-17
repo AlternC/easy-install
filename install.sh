@@ -5,16 +5,15 @@
 . "lib_installer.sh"
 
 if [ ! -f "config.sh" ] ; then
-
-	cp config.sh.dist config.sh;
-
+    cp config.sh.dist config.sh;
 fi;
 
 . "config.sh"
 
 ### Disclaimer 
 
-misc "#################################################### Licence ###########
+misc "=====                           Licence                            =====
+
 This script is licenced under the Gnu Public Licence v3.
 You should have received a copy of the Licence, otherwise it is available
 on https://www.gnu.org/copyleft/gpl.html. 
@@ -27,7 +26,7 @@ use of or inability to use our products.
 
 spacer
 
-warn "#################################################### Warning ###########
+warn "=====                           Warning                            =====
 
 This installation script for Alternc software is made for $ALTERNC_VERSION
 running on $DEBIAN_VERSION $DEBIAN_VERSION_NUMBER.
@@ -50,16 +49,16 @@ spacer
 
 if [[ $DEBUG == 1 ]] ; then
 
-	warn "Debug mode activated."
-	spacer
+    warn "Debug mode activated."
+    spacer
 
 fi;
 
 
 if [[ $DRY_RUN == 1 ]] ; then
 
-	warn "Dry run mode activated."
-	spacer
+    warn "Dry run mode activated."
+    spacer
 
 fi;
 
@@ -69,15 +68,15 @@ fi;
 
 # Exits if user is not root
 if [ $EUID != 0 ] ; then
-	alert "You must be root, please authentificate with your user password or run as root";
+    alert "You must be root, please authentificate with your user password or run as root";
 fi;
 
 # Exits if wrong debian or debian version
 if [ ! -f /etc/debian_version ] ; then
-	alert "Not a DEBIAN system (missing /etc/debian_version)"
+    alert "Not a DEBIAN system (missing /etc/debian_version)"
 fi
 if [[ ! $(cat /etc/debian_version) =~ $DEBIAN_VERSION_NUMBER.[[:digit:]] ]] ; then
-	alert "Not a valid DEBIAN system (not a $DEBIAN_VERSION $DEBIAN_VERSION_NUMBER)"
+    alert "Not a valid DEBIAN system (not a $DEBIAN_VERSION $DEBIAN_VERSION_NUMBER)"
 fi
 
 # Exits if no web access
@@ -86,8 +85,9 @@ if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
 fi
 
 
-## Debconf
+## Mandatory packets
 
+misc "Installing mandatory packages"
 
 # Installs dnsutils (mandatory for dig)
 apt_get dnsutils
@@ -107,13 +107,14 @@ apt_get pwgen
 
 spacer
 
-info "Your Alternc server needs a public IP Address to be available on 
-the web from everywhere in the world."
+info "=====        Your Alternc server needs a public IP Address         =====
+
+This makes it available on the web from everywhere in the world."
 
 misc "For your information, here are the internet addresses of this machine:"
 
 for ip in  $(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
-	misc "   $ip"
+    misc "   $ip"
 done;
 
 ask "Please provide the public IP address"
@@ -127,19 +128,82 @@ ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
 test_local_ip $ALTERNC_PUBLIC_IP
 
 
+## FQDN
+
+spacer
+
+info "=====              Your Alternc needs a domain name                =====
+
+This domain name will be used to access the panel and send/receive mail.
+                                         
+You must use an original domain name dedicated for this purpose.
+In other words, do not use a domain name intended to be your company or 
+personal website. 
+For example, 'example.com' is not good, unless your company is the 
+hosting service by itself. 'panel.example.com' will work better, 
+allowing you to still have your website on 'www.example.com'
+
+If you are unsure, here are a few solutions: 
+1.  Create a subdomain dedicated to alternc on a domain name you own
+2.  Use the free alternc.net domain name service      
+        
+We recommand using the alternc.net subdomain name if you are new to this.
+You'll only need to request your subdomain on http://alternc.net and 
+point it to the IP address you just provided.
+Your alternc domain name might then look like 'example.alternc.net'"
+
+ask "Do you want to use alternc.net domain name service?  y/n"
+
+read VAR_USE_ALTERNC_SUBDOMAIN
+
+check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
+
+# Wants to use own domain name
+if [[ $check=0 ]] ; then
+
+    # Reads the hostname
+    if [ -f /etc/hostname ] ; then
+        HOSTNAME=$(cat /etc/hostname)
+        misc "  For your information, this server hostname is :
+  $HOSTNAME"
+    fi;
+    # Reads the mailname
+    if [ -f /etc/mailname ] ; then
+        MAILNAME=$(cat /etc/mailname)
+        misc "  For your information, this server mailname is :
+  $MAILNAME"
+    fi;
+    
+    ask "  Please provide your Alternc domain name"
+    read ALTERNC_DESKTOPNAME
+    test_ns $ALTERNC_DESKTOPNAME
+    
+ 
+# run the alterc.net api client
+else
+	#todo 
+    alternc_net_get_domain
+
+    ask "  Please provide the alternc.net subdomain name"
+    read ALTERNC_DESKTOPNAME
+    test_ns $ALTERNC_DESKTOPNAME
+    
+fi
+
+# Sets the mailname 
+ALTERNC_POSTFIX_MAILNAME=$ALTERNC_DESKTOPNAME
+
+
 ## DNS
 
 # Asks if user wants to use the alternc services for DNS
 
-info "Having Domain Name Servers is mandatory for your alternc instance.
+info "=====              Your Alternc needs DNS Servers                =====
 
-Name servers are used to distribute informations about the domain names.
+Domain Name Servers announce addresses of the domain names on the web.
 
-Don't know what that means? Or do not have name servers you can use?
-
-We advice you to use the service provided by the alternc team.
-
-This service is free. Learn more on http://alternc.net."
+If you don't have at least two name servers with minimal redundancy, we
+highly recommand you the free service we provide (see http://alternc.net )"
 
 ask "Do you want to use Alternc.net name servers ? y/n"
 
@@ -150,59 +214,23 @@ check=$(validate $VAR_USE_ALTERNC_NS)
 
 # User wants to use own name servers
 if [[ "0" = "$check" ]] ; then
-	info "You need two valid nameservers :"
+    info "You need two valid nameservers :"
 
-	ask "  Please provide your primary NS server"
-	read ALTERNC_NS1
-	test_ns $ALTERNC_NS1
-	
-	ask "  Please provide your secondary NS server"
-	read ALTERNC_NS2
-	test_ns $ALTERNC_NS2
-	
+    ask "  Please provide your primary NS server"
+    read ALTERNC_NS1
+    test_ns $ALTERNC_NS1
+    
+    ask "  Please provide your secondary NS server"
+    read ALTERNC_NS2
+    test_ns $ALTERNC_NS2
+    
 # User wants to use Alternc NS
 
 else
-	ALTERNC_NS1="ns1.alternc.net"
-	ALTERNC_NS2="ns2.alternc.net"
+    ALTERNC_NS1="ns1.alternc.net"
+    ALTERNC_NS2="ns2.alternc.net"
 fi
 
-
-## URL 
-
-spacer
-
-info "The Alternc panel requires an URL for web access. If you own only 
-one domaine name which is intended to be your own website, you 
-should be careful about NOT choosing this domain name as the Alternc URL.
-
-Simply create a subdomain dedicated to alternc like alternc.example.com
-
-You can also choose to use a domain name provided by your hoster or 
-directly the IP address of your server, but this is not a good solution.
-
-Don't know much about DNS? The Alternc team  provides a free service 
-for you: you get your own alternc.net subdomain, point it to this server
-IP and use it as your Alternc panel URL."
-
-ask "Would you like to use the free alternc.net panel subdomain name service?  y/n"
-
-read VAR_USE_ALTERNC_SUBDOMAIN
-
-check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
-
-# Wants to use own domain name
-if [[ $check=0 ]] ; then
-
-	ask "  Please provide your Alternc panel URL"
-	read ALTERNC_DESKTOPNAME
-	test_ns $ALTERNC_DESKTOPNAME
-	
- 
-# run the alterc.net api client
-else
-	alternc_net_get_domain
-fi
 
 
 
@@ -213,6 +241,8 @@ fi
 spacer
 
 info "
+=====           Optional installation: roundcube webmail           =====
+
 Roundcube is the webmail software proposed by alternc.
 
 We recommand adding it to your installation.
@@ -227,15 +257,17 @@ check=$(validate $INSTALL_ROUNDCUBE)
 # User wants to add roundcube
 if [[ -z $check ]] ; then
 
-	SOURCES_USE_BACKPORTS=1
-	ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
-	
+    SOURCES_USE_BACKPORTS=1
+    ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
+    
 fi
 
 # Asks if mailman is required
 spacer
 
 info "
+=====      Optional installation: mailman mailing list manager     =====
+
 Mailman is the mailing list software proposed by alternc.
 "
 
@@ -248,13 +280,25 @@ check=$(validate $INSTALL_MAILMAN)
 # User wants to add mailman
 if [[ -z $check ]] ; then
 
-	ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
-	
+    ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
+    
 fi
 
 
 
 ### Install alternc prerequisites
+
+## Sets params
+
+# Sets up some default params
+
+debconf phpmyadmin/reconfigure-webserver $ALTERNC_PHPMYADMIN_WEBSERVER phpmyadmin
+debconf phpmyadmin/dbconfig-install $ALTERNC_PHPMYADMIN_DBCONFIG phpmyadmin
+debconf postfix/mailname $ALTERNC_POSTFIX_MAILNAME postfix
+debconf postfix/main_mailer_type $ALTERNC_POSTFIX_MAILERTYPE postfix
+debconf shared/proftpd/inetd_or_standalone $ALTERNC_PROFTPD_STANDALONE proftpd-basic
+
+
 
 ## FS 
 
@@ -278,12 +322,17 @@ mount -o remount /
 
 # Checks if success
 
+# @todo
 
-## Mysql
+## postfix
+
 
 # Installs pwgen
 
-apt_get pwgen
+apt_get postfix postfix-mysql
+
+## Mysql
+
 
 # Generates mysql server root password
 
@@ -336,7 +385,7 @@ deb-src http://debian.alternc.org/ stable main" /etc/apt/sources.list.d/alternc.
 
 if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 
 
-	write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" /etc/apt/sources.list.d/alternc.list
+    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" /etc/apt/sources.list.d/alternc.list
 
 fi;
 
@@ -348,7 +397,7 @@ apt-get update
 
 # Checks list success
 if [ -z $(apt-cache search alternc) ] ; then 
-	alert "Something went wrong, could not find the alternc package in the sources";
+    alert "Something went wrong, could not find the alternc package in the sources";
 fi;
 
 
@@ -403,7 +452,7 @@ apt_get alternc $ADDITIONAL_PACKAGES
 
 # Run the alternc.install script
 if [ ! -f /usr/lib/alternc/alternc.install ] ; then 
-	alert "Something went wrong with your installation : alternc.install script  not found."
+    alert "Something went wrong with your installation : alternc.install script  not found."
 fi;
 
 # Sets the real mysql root password 

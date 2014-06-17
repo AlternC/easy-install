@@ -1,4 +1,4 @@
-set -e
+
 
 ALTERNC_VERSION="Alternc 3.2"
 DEBIAN_VERSION="Wheezy Debian"
@@ -21,6 +21,7 @@ COL_RESET="\x1b[39;49;00m"
 
 E_CDERROR=65
 
+#Alternc variables
 ALTERNC_ACLUNINSTALLED=""
 ALTERNC_ALTERNC_HTML=/var/alternc/html
 ALTERNC_ALTERNC_LOCATION=/var/alternc
@@ -59,6 +60,13 @@ ALTERNC_USE_PRIVATE_IP=""
 ALTERNC_USE_REMOTE_MYSQL=""
 ALTERNC_WELCOMECONFIRM=true
 
+
+# Some variables defined per design for the user
+ALTERNC_PHPMYADMIN_WEBSERVER="apache2"
+ALTERNC_PHPMYADMIN_DBCONFIG="true"
+ALTERNC_POSTFIX_MAILERTYPE="Internet Site"
+ALTERNC_PROFTPD_STANDALONE="standalone"
+
 ADDITIONAL_PACKAGES=""
 VAR_SKIP=0
 VAR_TEST_IP=91.194.60.1
@@ -93,7 +101,7 @@ ask() {
 spacer() {
 	
 	echo -e $COL_GRAY;
-	echo -e "------------------------------------------------------------------------"
+	echo -e " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	echo -e $COL_RESET;
 
 }
@@ -167,6 +175,7 @@ test_ns() {
 	local NS=$1
 	if [[ -z "$NS" ]] ; then
 		warn "missing domain name"
+		return 1
 	fi;
 	local cmd="$(dig +short A $NS)"
 	if [[ $cmd = "" ]] ; then
@@ -218,9 +227,9 @@ debconf() {
 validate() {
 	local VAR=$1
 	if [[ "y" == ${VAR,,} || "o" == ${VAR,,} ]] ; then
-		echo 1;
+		return 1;
 	fi;
-	echo 0;
+	return 0;
 }
 
 # @todo : request a subdomain
