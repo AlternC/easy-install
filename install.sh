@@ -64,6 +64,21 @@ fi;
 
 ### Installer prequisites
 
+
+## Mandatory packets
+
+misc "Installing mandatory packages"
+
+# Installs dnsutils (mandatory for dig)
+apt_get dnsutils
+ 
+# Installs inetutils-ping 
+apt_get inetutils-ping
+
+# Installs pwgen password generator
+apt_get pwgen
+
+
 ## Checks debian / net / uid / etc. 
 
 # Exits if user is not root
@@ -83,20 +98,6 @@ fi
 if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
     alert "This machine is not connected to Internet."
 fi
-
-
-## Mandatory packets
-
-misc "Installing mandatory packages"
-
-# Installs dnsutils (mandatory for dig)
-apt_get dnsutils
- 
-# Installs inetutils-ping 
-apt_get inetutils-ping
-
-# Installs pwgen password generator
-apt_get pwgen
 
 
 
