@@ -157,7 +157,7 @@ You'll only need to request your subdomain on http://alternc.net and
 point it to the IP address you just provided.
 Your alternc domain name might then look like 'example.alternc.net'"
 
-ask "Do you want to use alternc.net domain name service?  y/n"
+ask "Do you want to use alternc.net domain name service? (y/N)"
 
 read VAR_USE_ALTERNC_SUBDOMAIN
 
@@ -218,7 +218,7 @@ Domain Name Servers announce addresses of the domain names on the web.
 If you don't have at least two name servers with minimal redundancy, we
 highly recommand you the free service we provide (see http://alternc.net )"
 
-ask "Do you want to use Alternc.net name servers ? y/n"
+ask "Do you want to use Alternc.net name servers ?(y/N)"
 
 read VAR_USE_ALTERNC_NS
 
@@ -261,7 +261,7 @@ Roundcube is the webmail software proposed by alternc.
 We recommand adding it to your installation.
 "
 
-ask "Would you like to install Roundcube? (y/n)"
+ask "Would you like to install Roundcube? (y/N)"
 
 read INSTALL_ROUNDCUBE
 
@@ -285,7 +285,7 @@ info "
 Mailman is the mailing list software proposed by alternc.
 "
 
-ask "Would you like to install Mailman? (y/n)"
+ask "Would you like to install Mailman? (y/N)"
 
 read INSTALL_MAILMAN
 
@@ -300,7 +300,7 @@ if [[ -z $check ]] ; then
     
     # Asks language
     misc "By default mailman is installed with french and english."
-    ask "Do you want to use french as default language? (y/n)"
+    ask "Do you want to use french as default language? (y/N)"
 	read MAILMAN_USE_FRENCH
 	check=$(validate $MAILMAN_USE_FRENCH)    
 	
@@ -367,6 +367,9 @@ debconf postfix/mailname string $ALTERNC_POSTFIX_MAILNAME postfix
 debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
 debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
 
+# preseeds mysql
+debconf mysql-server/root_password string password "" mysql-server-5.5
+debconf mysql-server/root_password_again string password "" mysql-server-5.5
 
 ### Install alternc prerequisites
 
@@ -403,13 +406,6 @@ apt_get postfix postfix-mysql
 ## Mysql
 
 
-# Preseeds mysql server root password
-ALTERNC_MYSQL_PASSWORD=""
-
-debconf mysql-server/root_password string password "" mysql-server-5.5
-debconf mysql-server/root_password_again string password "" mysql-server-5.5
-
-
 # Installs mysql 
 apt_get mysql-server mysql-client
 
@@ -417,21 +413,21 @@ apt_get mysql-server mysql-client
 check_service mysqld
 
 
-
 ## apt 
+ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc-easy-install.list" 
+BACKPORTS_SOURCE_LIST_FILE="/etc/apt/sources.list.d/backports-easy-install.list" 
 
-# Creates new sources file 
+# delete source files if exist 
+delete $ALTERNC_SOURCE_LIST_FILE
+delete $BACKPORTS_SOURCE_LIST_FILE
 
+# Creates new debian sources file 
 write "deb http://debian.alternc.org/ stable main
-deb-src http://debian.alternc.org/ stable main" /etc/apt/sources.list.d/alternc.list
+deb-src http://debian.alternc.org/ stable main" $ALTERNC_SOURCE_LIST_FILE
 
-
-# Creates new sources file for backports if required
-
+# Creates new  backports sources file if required
 if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 
-
-    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" /etc/apt/sources.list.d/backports.list
-
+    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" $BACKPORTS_SOURCE_LIST_FILE
 fi;
 
 # Downloads key

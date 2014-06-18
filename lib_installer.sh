@@ -244,6 +244,8 @@ alternc_net_get_domain(){
 }
 
 # Encapsulates cp 
+# @param 1 source file
+# @param 2 target file 
 copy(){
 	if [[ $DRY_RUN = 1 ]] ; then
 		debug "System copies $1 as $2"
@@ -253,6 +255,23 @@ copy(){
 		fi;	
 		cp $1 $2
 	fi;
+}
+# Encapsulates rm 
+# @param 1 file
+delete(){
+	if [[ $DRY_RUN = 1 ]] ; then
+		debug "System deletes $1"
+		return 1
+	fi
+	# If no file, exit
+	if [ ! -f "$1" ] ; then
+		return 1
+	fi
+	if [[ $DEBUG = 1 ]] ; then 
+		debug "Deleting $1"
+	fi;	
+	rm -f $1
+	return 1
 }
 
 # Encapsulates echo $1 > $2
