@@ -260,7 +260,6 @@ copy(){
 # @param 2 file
 write() {
 	
-	
 	if [[ $DRY_RUN == 1 ]] ; then
 		debug "System writes '$1' \nin $2"
 	else
@@ -273,9 +272,9 @@ write() {
 		rm -f "$2"
 		touch "$2"
 		# echo each text line
-		for line in $(echo "$1"); do
-			echo $line >> $2
-		done;
+		# in a subshell to not mess IFS
+		$(IFS="
+";for line in $(echo "$1"); do echo $line >> $2; done;)
 	fi;
 	
 }
