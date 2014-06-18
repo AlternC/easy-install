@@ -445,8 +445,12 @@ fi;
 ### Alternc install
 
 # Starts the alternc install 
+apt_get alternc 
 
-apt_get alternc $ADDITIONAL_PACKAGES
+# Adds additional packages if required
+if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
+	apt_get $ADDITIONAL_PACKAGES
+fi;
 
 ### Post install
 
