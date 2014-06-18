@@ -199,7 +199,7 @@ fi
 ALTERNC_POSTFIX_MAILNAME="$ALTERNC_DESKTOPNAME"
 
 # Writes the mailname in file
-write "$ALTERNC_DESKTOPNAME" /etc/mailname
+write "$ALTERNC_DESKTOPNAME" /etc/mailname 0
 
 # Edit the host file
 backup_file "/etc/hosts"
@@ -456,7 +456,7 @@ deb-src http://debian.alternc.org/ stable main" /etc/apt/sources.list.d/alternc.
 
 if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 
 
-    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" /etc/apt/sources.list.d/alternc.list
+    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" /etc/apt/sources.list.d/backports.list
 
 fi;
 

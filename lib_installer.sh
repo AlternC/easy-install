@@ -256,7 +256,10 @@ copy(){
 }
 
 # Encapsulates echo $1 > $2
+# @param 1 content
+# @param 2 file
 write() {
+	
 	
 	if [[ $DRY_RUN == 1 ]] ; then
 		debug "System writes '$1' \nin $2"
@@ -267,6 +270,7 @@ write() {
 		# backups file if exists
 		backup_file "$2"
 		# touch file
+		rm -f "$2"
 		touch "$2"
 		# echo each text line
 		for line in $(echo "$1"); do
