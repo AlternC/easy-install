@@ -256,8 +256,8 @@ copy(){
 }
 
 # Encapsulates echo $1 > $2
-# @param 1 content
-# @param 2 file
+# @param 1 content
+# @param 2 file
 write() {
 	
 	if [[ $DRY_RUN == 1 ]] ; then
@@ -268,7 +268,7 @@ write() {
 		fi;	
 		# backups file if exists
 		backup_file "$2"
-		# touch file
+		# touch file
 		rm -f "$2"
 		touch "$2"
 		# echo each text line
@@ -279,9 +279,9 @@ write() {
 	
 }
 
-# inserts a line in file at line number
-# @param 1 file path
-# @param 2 line #
+# inserts a line in file at line number
+# @param 1 file path
+# @param 2 line #
 # @param 3 line
 insert(){
 	if [[ $DRY_RUN == 1 ]] ; then
@@ -335,3 +335,55 @@ check_service() {
 		info "Service $service is running OK"
 	fi;	
 }
+
+
+# Edits the fstab file to add quota and acl tags to partition mounting
+# @param 1	(optional) file name, default = /etc/fstab
+fstab_quota_and_acl(){
+
+	if [[ $DRY_RUN == 1 ]] ; then 
+		debug "System edits the fstab to activate acl and quota "
+	fi;
+	local line_num=1;
+	# Stores the old Internal Field Separator
+	OLD_IFS=$IFS
+	# Sets the IFS to new line
+	IFS="
+	"
+	# Sets the edited file (allows testing)
+	local file=""
+	# Default file
+	if [ -z "$1" ] ; then
+		file="/etc/fstab"
+	# Custom file
+	else 
+		file="$1"
+		if [ ! -f "$1" ] ; then 
+			warn "$1 is not a valid file"
+		fi
+	fi;
+	# Runs through each line of the fstab file
+	for line in $(cat "$file"); do
+		# Identifies mount point if not a comment
+		mount_point=$( echo "$line"|grep -v "^#"|awk '{print $2}');
+		# Edits the identified line for / system 
+		if [[ "$mount_point" == "/" ]] ; then 
+			# The / line with a comment
+			commented_line="# $line"
+			# The / line with acl and quota
+			edited_line=$(echo $line|awk '{print $1"\t"$2"\t"$3"\tacl,quota,"$4"\t"$5"\t"$6}')
+			# The n+1 line number 
+			new_line_num=$((line_num + 1))
+			# Actual sed operation
+sed -i -e "${line_num}d" -e "${new_line_num}i\
+# The next line was commented to add quota and acl on the root file system" -e "${new_line_num}i\
+$commented_line" -e "${new_line_num}i\
+$edited_line" $file
+		fi; 
+		# Not found, keep searching
+		line_num=$(( $line_num + 1 ));
+	done
+	# Resets the IFS
+	IFS=$OLD_IFS
+}
+

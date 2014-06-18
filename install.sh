@@ -376,19 +376,17 @@ debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE pr
 # Installs acl
 apt_get acl
 
-
-# Instalsl quota
+# Install quota
 apt_get quota
 
 # Backups fstab
 misc "Editing and backuping your /etc/fstab file"
-copy /etc/fstab /etc/fstab.bak
+backup_file /etc/fstab 
 
 # Edits fstab
-
+fstab_quota_and_acl
  
 # Remounts "/" partition
-
 mount -o remount /
 
 # Checks if success
@@ -397,43 +395,19 @@ mount -o remount /
 
 ## postfix
 
-
-# Installs pwgen
+# Installs postfix
 
 apt_get postfix postfix-mysql
+
 
 ## Mysql
 
 
-# Generates mysql server root password
-
-MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
-
-# Stores mysql server root password in /root/.my.cnf
-write "
-[client]
-password=$MYSQL_ROOT_PASSWORD
-database=alternc" /root/.my.cnf 
-
 # Preseeds mysql server root password
-ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
+ALTERNC_MYSQL_PASSWORD=""
 
-debconf mysql-server/root_password string password $MYSQL_ROOT_PASSWORD mysql-server-5.5
-debconf mysql-server/root_password_again string password $MYSQL_ROOT_PASSWORD mysql-server-5.5
-
-# Inform the user
-info "An important password has just been generated.
-
-It is the mysql root (or master) password.
-
-This password has been stored in the root directory : /root/.my.cnf
-
-For your information this password is : "
-
-warn "  $MYSQL_ROOT_PASSWORD"
-
-info "To keep this installer as simple as possible, we're starting with
-an empty password and we'll set up the real password at the end."
+debconf mysql-server/root_password string password "" mysql-server-5.5
+debconf mysql-server/root_password_again string password "" mysql-server-5.5
 
 
 # Installs mysql 
@@ -486,10 +460,33 @@ if [ ! -f /usr/share/alternc/install/alternc.install ] ; then
 fi;
 alternc.install
 
+## mysql
+
+# Generates mysql server root password
+MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
 
 # Sets the real mysql root password 
 mysql -u root --password="" -e "UPDATE mysql.user SET Password=PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE user.User = 'root' LIMIT 1;"
 mysql -u root --password="" -e "FLUSH PRIVILEGES;"
+
+# Stores mysql server root password in /root/.my.cnf
+write "
+[client]
+password=$MYSQL_ROOT_PASSWORD
+database=alternc" /root/.my.cnf 
+
+# Inform the user
+info "An important password has just been generated.
+
+It is the mysql root (or master) password.
+
+This password has been stored in the root directory : /root/.my.cnf
+
+For your information this password is : "
+
+warn "  $MYSQL_ROOT_PASSWORD"
+
+## Service checks
 
 # Checks if success : Apache2 running 
 check_service apache2
