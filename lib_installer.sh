@@ -5,7 +5,7 @@ DEBIAN_VERSION="Wheezy Debian"
 DEBIAN_VERSION_NUMBER="7"
 
 # translations
-# @see http://mywiki.wooledge.org/BashFAQ/098
+# @see http://mywiki.wooledge.org/BashFAQ/098
 export TEXTDOMAIN=alternc-easy-install
 export TEXTDOMAINDIR=$(pwd)/translations
 
@@ -61,7 +61,7 @@ ALTERNC_USE_REMOTE_MYSQL=""
 ALTERNC_WELCOMECONFIRM=true
 
 
-# Some variables defined per design for the user
+# Some variables defined per design for the user
 ALTERNC_PHPMYADMIN_WEBSERVER="apache2"
 ALTERNC_PHPMYADMIN_DBCONFIG="true"
 ALTERNC_POSTFIX_MAILERTYPE="Internet Site"
@@ -146,7 +146,7 @@ alert() {
 
 try_exit() {
 	if [ -z $1 ] ; then
-		ask "Do you want to exit the installer? (enter y to exit) "
+		ask "Do you want to exit the installer? (y/N) "
 	else
 		ask $1;
 	fi;
@@ -246,7 +246,7 @@ alternc_net_get_domain(){
 # Encapsulates cp 
 copy(){
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "# cp $1 $2"
+		debug "System copies $1 as $2"
 	else
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "cp $1 $2"
@@ -258,24 +258,68 @@ copy(){
 # Encapsulates echo $1 > $2
 write() {
 	
-	if [[ $DRY_RUN ]] ; then
-		debug "# echo $1 > $2"
+	if [[ $DRY_RUN == 1 ]] ; then
+		debug "System writes '$1' \nin $2"
 	else
-		if [[ $DEBUG ]] ; then 
-			debug "echo $1 > $2"
+		if [[ $DEBUG == 1 ]] ; then 
+			debug "# writing '$1' \nin $2"
 		fi;	
-		# resets file content 
-		echo "" > "$2"
-		# echo each text line
-		for l in $(echo "$1"); do 
-			echo $l >> $2
+		# backups file if exists
+		backup_file "$2"
+		# touch file
+		touch "$2"
+		# echo each text line
+		for line in $(echo "$1"); do
+			echo $line >> $2
 		done;
 	fi;
 	
 }
 
+# inserts a line in file at line number
+# @param 1 file path
+# @param 2 line #
+# @param 3 line
+insert(){
+	if [[ $DRY_RUN == 1 ]] ; then
+		debug "Systems inserts '$3' in $1 at line #$2"
+		return 1
+	fi;
+	sed -i "$2 i\
+$3"	 $1
+	return 1
+	
+}
+
+# backups file if exists
+# @param 1 file path
+backup_file(){
+	if [[ $DRY_RUN == 1 ]] ; then
+		debug "Systems makes a backup of $1"
+		return 1
+	fi;
+	if [ -f "$1" ] ; then
+		local backed=0
+		local num=1
+		while [[ $backed != 1 ]] ; do 
+			if [ -f "$1.$num" ] ; then
+				num=$(( $num + 1 ))
+			else
+				cp "$1" "$1.$num"
+				touch "$1"
+				backed=1
+			fi;
+		done;
+		if [[ $DEBUG == 1 ]] ; then 
+			debug "File ${1} backed as $1.$num"
+		fi;
+		return 1
+	fi;
+	return 0
+}
+
 # Attempts to check if a service is currently running 
-# @param 1 	the service name ex: mysqld
+# @param 1 	the service name ex: mysqld
 #			This must be an /etc/init.d script name
 check_service() {
 	if [ -z $1 ] ; then
@@ -283,7 +327,7 @@ check_service() {
 	fi;
 	local service=$1
 	if [ $(pgrep $1 | wc -l) -eq 0 ] ; then
-		alert "Service $service is not running"
+		warn "Service $service is not running"
 	else
 		info "Service $service is running OK"
 	fi;	

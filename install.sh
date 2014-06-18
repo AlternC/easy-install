@@ -99,7 +99,11 @@ if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
     alert "This machine is not connected to Internet."
 fi
 
+# Exits if alternc present 
 
+if [[ $(dpkg-query -W -f='${Status}' alternc 2>/dev/null | grep -c "ok installed") == 1 ]] ; then 
+	alert "Alternc already installed, nothing to do." ; 
+fi;
 
 
 ### User inputs
@@ -177,7 +181,7 @@ if [[ $check=0 ]] ; then
     
     ask "  Please provide your Alternc domain name"
     read ALTERNC_DESKTOPNAME
-    test_ns $ALTERNC_DESKTOPNAME
+    test_ns "$ALTERNC_DESKTOPNAME"
     
  
 # run the alterc.net api client
@@ -185,14 +189,22 @@ else
 	#todo 
     alternc_net_get_domain
 
-    ask "  Please provide the alternc.net subdomain name"
+    ask "Please provide the alternc.net subdomain name:"
     read ALTERNC_DESKTOPNAME
-    test_ns $ALTERNC_DESKTOPNAME
+    test_ns "$ALTERNC_DESKTOPNAME"
     
 fi
 
-# Sets the mailname 
-ALTERNC_POSTFIX_MAILNAME=$ALTERNC_DESKTOPNAME
+# Sets the mailname 
+ALTERNC_POSTFIX_MAILNAME="$ALTERNC_DESKTOPNAME"
+
+# Writes the mailname in file
+write "$ALTERNC_DESKTOPNAME" /etc/mailname
+
+# Edit the host file
+backup_file "/etc/hosts"
+insert /etc/hosts 2 "::1\t$ALTERNC_DESKTOPNAME"
+insert /etc/hosts 2 "127.0.0.1\t$ALTERNC_DESKTOPNAME"
 
 
 ## DNS
@@ -286,7 +298,7 @@ if [[ -z $check ]] ; then
     
     info "Mailman added to your configuration"
     
-    # Asks language
+    # Asks language
     misc "By default mailman is installed with french and english."
     ask "Do you want to use french as default language? (y/n)"
 	read MAILMAN_USE_FRENCH
@@ -343,7 +355,7 @@ debconf alternc/retry_remote_mysql string "$ALTERNC_RETRY_REMOTE_MYSQL"
 debconf alternc/use_private_ip string "$ALTERNC_USE_PRIVATE_IP"
 debconf alternc/remote_mysql_error string "$ALTERNC_REMOTE_MYSQL_ERROR"
 
-# others
+# others
 debconf alternc-mailman/patch-mailman string "$ALTERNC_MAILMAN_PATCH_MAILMAN" alternc-mailman
 debconf mailman/site_languages string "$ALTERNC_MAILMAN_SITE_LANGUAGES" mailman
 debconf mailman/used_languages string "$ALTERNC_MAILMAN_USED_LANGUAGES" mailman
@@ -381,9 +393,9 @@ mount -o remount /
 
 # Checks if success
 
-# @todo
+# @todo
 
-## postfix
+## postfix
 
 
 # Installs pwgen
@@ -476,7 +488,8 @@ alternc.install
 
 
 # Sets the real mysql root password 
-mysql -u root --password="" -e "update mysql.user set Password=PASSWORD('$MYSQL_ROOT_PASSWORD') where user.User = 'root' limit 1;"
+mysql -u root --password="" -e "UPDATE mysql.user SET Password=PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE user.User = 'root' LIMIT 1;"
+mysql -u root --password="" -e "FLUSH PRIVILEGES;"
 
 # Checks if success : Apache2 running 
 check_service apache2
@@ -484,7 +497,13 @@ check_service apache2
 # Checks if success : Status 200 on panel home + title 
 
 # Checks if success : Postfix service running
-check_service postfix
+check_service master
 
 # Checks if success : xxx running
+
+# Prints passwords 
+
+# Proposes to send passwords by email
+
+
 
