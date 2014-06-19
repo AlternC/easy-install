@@ -6,10 +6,10 @@
 # Exit if any error occurs
 set -e
 
-# Functions 
+# Functions 
 . "lib_installer.sh"
 
-# Local config
+# Local config
 if [ ! -f "config.sh" ] ; then
     cp config.sh.dist config.sh;
 fi;
@@ -432,7 +432,7 @@ deb-src http://debian.alternc.org/ stable main" $ALTERNC_SOURCE_LIST_FILE
 
 # Creates new  backports sources file if required
 if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 
-    write "deb http://backports.debian.org/debian-backports wheezy-backports main contrib non-free" $BACKPORTS_SOURCE_LIST_FILE
+    write "deb http://http.debian.net/debian wheezy-backports main" $BACKPORTS_SOURCE_LIST_FILE
 fi;
 
 # Downloads key
@@ -442,7 +442,7 @@ wget http://debian.alternc.org/key.txt -O - | apt-key add -
 apt-get update
 
 # Checks list success
-if [ -z $(apt-cache search alternc) ] ; then 
+if [[ -z $(apt-cache search alternc) ]] ; then 
     alert "Something went wrong, could not find the alternc package in the sources";
 fi;
 
@@ -452,26 +452,29 @@ fi;
 # Starts the alternc install 
 apt_get alternc 
 
-# Adds additional packages if required
-if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
+# Adds additional packages if required
+if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
 	apt_get $ADDITIONAL_PACKAGES
 fi;
 
 ### Post install
 
 # Run the alternc.install script
-if [ ! -f /usr/share/alternc/install/alternc.install ] ; then 
+info "Running the alternc.install script"
+if [[ ! -f /usr/share/alternc/install/alternc.install ]] ; then 
     alert "Something went wrong with your installation : alternc.install script  not found."
 fi;
 alternc.install
 
-## mysql
+## mysql
 
 # Generates mysql server root password
 MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
 
 # Sets the real mysql root password 
+info "Resetting the mysql password"
 mysql -u root --password="" -e "UPDATE mysql.user SET Password=PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE user.User = 'root' LIMIT 1;"
+info "Flush mysql privileges"
 mysql -u root --password="" -e "FLUSH PRIVILEGES;"
 
 # Stores mysql server root password in /root/.my.cnf
@@ -491,7 +494,7 @@ For your information this password is : "
 
 warn "  $MYSQL_ROOT_PASSWORD"
 
-## Service checks
+## Service checks
 
 # Checks if success : Apache2 running 
 check_service apache2
