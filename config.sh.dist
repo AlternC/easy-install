@@ -4,4 +4,5 @@
 DEBUG=1
 # Do you want to simulate all operations to test the process?
 DRY_RUN=0
-
+# Do you want to run in strict mode where any error causes exit?
+STRICT=0

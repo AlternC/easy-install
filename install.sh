@@ -4,7 +4,9 @@
 ### Configuration
 
 # Exit if any error occurs
-set -e
+if [[ $STRICT == 1 ]] ; then
+	set -e
+fi;
 
 # Functions 
 . "lib_installer.sh"
