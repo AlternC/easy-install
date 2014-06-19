@@ -1,14 +1,19 @@
 #!/bin/bash
 
+
 ### Configuration
 
+# Exit if any error occurs
+set -e
+
+# Functions 
 . "lib_installer.sh"
 
+# Local config
 if [ ! -f "config.sh" ] ; then
     cp config.sh.dist config.sh;
 fi;
-
-. "config.sh"
+source "config.sh"
 
 ### Disclaimer 
 
