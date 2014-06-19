@@ -126,7 +126,7 @@ This makes it available on the web from everywhere in the world."
 misc "For your information, here are the internet addresses of this machine:"
 
 for ip in  $(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
-    misc "   $ip"
+    warn "$ip"
 done;
 
 ask "Please provide the public IP address"
@@ -233,7 +233,7 @@ check=$(validate $VAR_USE_ALTERNC_NS)
 
 
 # User wants to use own name servers
-if [[ "0" = "$check" ]] ; then
+if [[ "$check" == "0" ]] ; then
     info "You need two valid nameservers :"
 
     ask "  Please provide your primary NS server"
@@ -275,7 +275,7 @@ read INSTALL_ROUNDCUBE
 check=$(validate $INSTALL_ROUNDCUBE)
 
 # User wants to add roundcube
-if [[ -z $check ]] ; then
+if [[ "$check" == 1 ]] ; then
 
     SOURCES_USE_BACKPORTS=1
     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
@@ -299,7 +299,7 @@ read INSTALL_MAILMAN
 check=$(validate $INSTALL_MAILMAN)
 
 # User wants to add mailman
-if [[ -z $check ]] ; then
+if [[ "$check" == 1 ]] ; then
 
     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
     
@@ -456,7 +456,7 @@ apt_get alternc
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
-	apt_get $ADDITIONAL_PACKAGES
+	apt_get -t squeeze-backports $ADDITIONAL_PACKAGES
 fi;
 
 ### Post install
