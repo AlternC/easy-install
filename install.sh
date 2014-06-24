@@ -320,6 +320,8 @@ fi
 
 ### Mysql password
 
+# Generates phpmyadmin user password
+ALTERNC_PHPMYADMIN_USERPASSWORD=$(pwgen -s 15)
 
 # Generates mysql server root password
 MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
@@ -336,7 +338,6 @@ ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 
 
 # alternc
-
 debconf alternc/acluninstalled string "$ALTERNC_ACLUNINSTALLED"
 debconf alternc/quotauninstalled string "$ALTERNC_QUOTAUNINSTALLED"
 debconf alternc/desktopname string "$ALTERNC_DESKTOPNAME"
@@ -374,19 +375,30 @@ debconf alternc/retry_remote_mysql string "$ALTERNC_RETRY_REMOTE_MYSQL"
 debconf alternc/use_private_ip string "$ALTERNC_USE_PRIVATE_IP"
 debconf alternc/remote_mysql_error string "$ALTERNC_REMOTE_MYSQL_ERROR"
 
-# others
+# mailman
 debconf alternc-mailman/patch-mailman string "$ALTERNC_MAILMAN_PATCH_MAILMAN" alternc-mailman
 debconf mailman/site_languages string "$ALTERNC_MAILMAN_SITE_LANGUAGES" mailman
 debconf mailman/used_languages string "$ALTERNC_MAILMAN_USED_LANGUAGES" mailman
 debconf mailman/default_server_language string "$ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE" mailman
 debconf mailman/create_site_list string "$ALTERNC_MAILMAN_CREATE_SITE_LIST" mailman
+
+# phpmyadmin
 debconf phpmyadmin/reconfigure-webserver string $ALTERNC_PHPMYADMIN_WEBSERVER phpmyadmin
-debconf phpmyadmin/dbconfig-install string $ALTERNC_PHPMYADMIN_DBCONFIG phpmyadmin
+debconf phpmyadmin/dbconfig-install string "$ALTERNC_PHPMYADMIN_DBCONFIG" phpmyadmin
+debconf phpmyadmin/mysql/admin-pass string "$MYSQL_ROOT_PASSWORD" phpmyadmin
+debconf phpmyadmin/setup-username string "$ALTERNC_PHPMYADMIN_USERNAME" phpmyadmin
+debconf phpmyadmin/setup-password string "$ALTERNC_PHPMYADMIN_USERPASSWORD" phpmyadmin
+debconf phpmyadmin/mysql/admin-user string "$ALTERNC_PHPMYADMIN_ADMINUSER" phpmyadmin
+ 
+
+# postfix
 debconf postfix/mailname string $ALTERNC_POSTFIX_MAILNAME postfix
 debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
+
+# proftpd
 debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
 
-# preseeds mysql
+# mysql
 debconf mysql-server/root_password string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
 debconf mysql-server/root_password_again string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
 
@@ -481,11 +493,6 @@ alternc.install
 
 ## mysql
 
-# Sets the real mysql root password 
-info "Resetting the mysql password"
-mysql -u root --password="" -e "UPDATE mysql.user SET Password=PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE user.User = 'root' LIMIT 1;"
-info "Flush mysql privileges"
-mysql -u root --password="" -e "FLUSH PRIVILEGES;"
 
 # Inform the user
 info "An important password has just been generated.
