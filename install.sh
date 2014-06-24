@@ -330,6 +330,8 @@ write "
 password=$MYSQL_ROOT_PASSWORD
 database=alternc" /root/.my.cnf 
 
+ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
+
 ### Debconf parameters
 
 
@@ -348,7 +350,7 @@ debconf alternc/mysql/host string "$ALTERNC_MYSQL_HOST"
 debconf alternc/mysql/db string "$ALTERNC_MYSQL_DB"
 debconf alternc/mysql/user string "$ALTERNC_MYSQL_USER"
 debconf alternc/mysql/remote_user string "$ALTERNC_MYSQL_REMOTE_USER"
-debconf alternc/mysql/password string "$ALTERNC_MYSQL_PASSWORD"
+debconf alternc/mysql/password string "$MYSQL_ROOT_PASSWORD"
 debconf alternc/mysql/remote_password string "$ALTERNC_MYSQL_REMOTE_PASSWORD"
 debconf alternc/mysql/alternc_mail_user string "$ALTERNC_MYSQL_ALTERNC_MAIL_USER"
 debconf alternc/mysql/alternc_mail_password string "$ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD"
@@ -385,8 +387,8 @@ debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
 debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
 
 # preseeds mysql
-debconf mysql-server/root_password string string "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
-debconf mysql-server/root_password_again string "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
+debconf mysql-server/root_password string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
+debconf mysql-server/root_password_again string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
 
 ### Install alternc prerequisites
 
