@@ -385,11 +385,11 @@ debconf mailman/create_site_list string "$ALTERNC_MAILMAN_CREATE_SITE_LIST" mail
 # phpmyadmin
 debconf phpmyadmin/reconfigure-webserver string $ALTERNC_PHPMYADMIN_WEBSERVER phpmyadmin
 debconf phpmyadmin/dbconfig-install string "$ALTERNC_PHPMYADMIN_DBCONFIG" phpmyadmin
+debconf phpmyadmin/mysql/admin-user string "$ALTERNC_PHPMYADMIN_ADMINUSER" phpmyadmin
 debconf phpmyadmin/mysql/admin-pass string "$MYSQL_ROOT_PASSWORD" phpmyadmin
 debconf phpmyadmin/setup-username string "$ALTERNC_PHPMYADMIN_USERNAME" phpmyadmin
 debconf phpmyadmin/setup-password string "$ALTERNC_PHPMYADMIN_USERPASSWORD" phpmyadmin
-debconf phpmyadmin/mysql/admin-user string "$ALTERNC_PHPMYADMIN_ADMINUSER" phpmyadmin
- 
+debconf phpmyadmin/password-confirm string "$ALTERNC_PHPMYADMIN_USERPASSWORD" phpmyadmin
 
 # postfix
 debconf postfix/mailname string $ALTERNC_POSTFIX_MAILNAME postfix
