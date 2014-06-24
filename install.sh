@@ -385,8 +385,8 @@ debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
 debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
 
 # preseeds mysql
-debconf mysql-server/root_password string password "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
-debconf mysql-server/root_password_again string password "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
+debconf mysql-server/root_password string string "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
+debconf mysql-server/root_password_again string "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
 
 ### Install alternc prerequisites
 
