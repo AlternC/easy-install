@@ -23,10 +23,10 @@ E_CDERROR=65
 
 #Alternc variables
 ALTERNC_ACLUNINSTALLED=""
-ALTERNC_ALTERNC_HTML=/var/alternc/html
+ALTERNC_ALTERNC_HTML=/var/www/alternc
 ALTERNC_ALTERNC_LOCATION=/var/alternc
 ALTERNC_ALTERNC_LOGS=/var/log/alternc/sites/
-ALTERNC_ALTERNC_MAIL=/var/alternc/mail
+ALTERNC_ALTERNC_MAIL=/var/mail/alternc
 ALTERNC_DEFAULT_MX2=""
 ALTERNC_DEFAULT_MX=""
 ALTERNC_DESKTOPNAME=""
@@ -232,10 +232,10 @@ debconf() {
 # gatepoint for all 'y,o' user inputs management
 validate() {
 	local VAR=$1
-	if [[ "y" == ${VAR,,} || "o" == ${VAR,,} ]] ; then
-		return 1;
+	if [[ "n" == ${VAR,,} ]] ; then
+		return 0;
 	fi;
-	return 0;
+	return 1;
 }
 
 # @todo : request a subdomain

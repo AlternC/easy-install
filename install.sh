@@ -164,7 +164,7 @@ You'll only need to request your subdomain on http://alternc.net and
 point it to the IP address you just provided.
 Your alternc domain name might then look like 'example.alternc.net'"
 
-ask "Do you want to use alternc.net domain name service? (y/N)"
+ask "Do you want to use alternc.net domain name service? (Y/n)"
 
 read VAR_USE_ALTERNC_SUBDOMAIN
 
@@ -225,7 +225,7 @@ Domain Name Servers announce addresses of the domain names on the web.
 If you don't have at least two name servers with minimal redundancy, we
 highly recommand you the free service we provide (see http://alternc.net )"
 
-ask "Do you want to use Alternc.net name servers ?(y/N)"
+ask "Do you want to use Alternc.net name servers ?(Y/n)"
 
 read VAR_USE_ALTERNC_NS
 
@@ -268,7 +268,7 @@ Roundcube is the webmail software proposed by alternc.
 We recommand adding it to your installation.
 "
 
-ask "Would you like to install Roundcube? (y/N)"
+ask "Would you like to install Roundcube? (Y/n)"
 
 read INSTALL_ROUNDCUBE
 
@@ -292,7 +292,7 @@ info "
 Mailman is the mailing list software proposed by alternc.
 "
 
-ask "Would you like to install Mailman? (y/N)"
+ask "Would you like to install Mailman? (Y/n)"
 
 read INSTALL_MAILMAN
 
@@ -307,7 +307,7 @@ if [[ "$check" == 1 ]] ; then
     
     # Asks language
     misc "By default mailman is installed with french and english."
-    ask "Do you want to use french as default language? (y/N)"
+    ask "Do you want to use french as default language? (Y/n)"
 	read MAILMAN_USE_FRENCH
 	check=$(validate $MAILMAN_USE_FRENCH)    
 	
@@ -318,7 +318,17 @@ if [[ "$check" == 1 ]] ; then
     
 fi
 
+### Mysql password
 
+
+# Generates mysql server root password
+MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
+
+# Stores mysql server root password in /root/.my.cnf
+write "
+[client]
+password=$MYSQL_ROOT_PASSWORD
+database=alternc" /root/.my.cnf 
 
 ### Debconf parameters
 
@@ -375,8 +385,8 @@ debconf postfix/main_mailer_type string $ALTERNC_POSTFIX_MAILERTYPE postfix
 debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE proftpd-basic
 
 # preseeds mysql
-debconf mysql-server/root_password string password "" mysql-server-5.5
-debconf mysql-server/root_password_again string password "" mysql-server-5.5
+debconf mysql-server/root_password string password "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
+debconf mysql-server/root_password_again string password "$ALTERNC_MYSQL_PASSWORD" mysql-server-5.5
 
 ### Install alternc prerequisites
 
@@ -416,11 +426,10 @@ apt_get postfix postfix-mysql
 # Installs mysql 
 apt_get mysql-server mysql-client
 
-# Checks if success : mysql service running 
-check_service mysqld
 
 
-## apt 
+
+## apt sources
 ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc-easy-install.list" 
 BACKPORTS_SOURCE_LIST_FILE="/etc/apt/sources.list.d/backports-easy-install.list" 
 
@@ -470,20 +479,11 @@ alternc.install
 
 ## mysql
 
-# Generates mysql server root password
-MYSQL_ROOT_PASSWORD=$(pwgen -s 35)
-
 # Sets the real mysql root password 
 info "Resetting the mysql password"
 mysql -u root --password="" -e "UPDATE mysql.user SET Password=PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE user.User = 'root' LIMIT 1;"
 info "Flush mysql privileges"
 mysql -u root --password="" -e "FLUSH PRIVILEGES;"
-
-# Stores mysql server root password in /root/.my.cnf
-write "
-[client]
-password=$MYSQL_ROOT_PASSWORD
-database=alternc" /root/.my.cnf 
 
 # Inform the user
 info "An important password has just been generated.
@@ -505,6 +505,9 @@ check_service apache2
 
 # Checks if success : Postfix service running
 check_service master
+
+# Checks if success : mysql service running 
+check_service mysqld
 
 # Checks if success : xxx running
 
