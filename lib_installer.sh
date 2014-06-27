@@ -38,7 +38,7 @@ ALTERNC_MYSQL_ALTERNC_MAIL_USER=""
 ALTERNC_MYSQL_CLIENT=localhost
 ALTERNC_MYSQL_DB=alternc
 ALTERNC_MYSQL_HOST="127.0.0.1"
-ALTERNC_MYSQL_PASSWORD="" # Set during install
+ALTERNC_MYSQL_PASSWORD="" # Set during install
 ALTERNC_MYSQL_REMOTE_PASSWORD=""
 ALTERNC_MYSQL_REMOTE_USER=""
 ALTERNC_MYSQL_USER=root
@@ -71,7 +71,7 @@ ALTERNC_MAILMAN_PATCH_MAILMAN="true"
 ALTERNC_PHPMYADMIN_ADMINUSER="root"
 ALTERNC_PHPMYADMIN_DBCONFIG="false"
 ALTERNC_PHPMYADMIN_USERNAME="admin"
-ALTERNC_PHPMYADMIN_USERPASSWORD="" # Set during install
+ALTERNC_PHPMYADMIN_USERPASSWORD="" # Set during install
 ALTERNC_PHPMYADMIN_WEBSERVER="apache2"
 ALTERNC_POSTFIX_MAILERTYPE="Internet Site"
 ALTERNC_PROFTPD_STANDALONE="standalone"
@@ -349,7 +349,7 @@ replace(){
 		debug "Systems replaces '$1' by $2 in $3"
 		return 1
 	fi;
-    if [[ $DEBUG == 1 ]] ; then 
+    if [[ $DEBUG == 1 ]] ; then 
         debug "Replacing '$1' by $2 in $3"
     fi;
 	sed -i -e "s/$1/$2/" "$3"
