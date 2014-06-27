@@ -317,6 +317,23 @@ $3"	 $1
 	
 }
 
+# replaces string $1 in by $2 in $3
+# @param 1 regexp
+# @param 2 replacement
+# @param 3 file path
+replace(){
+	if [[ $DRY_RUN == 1 ]] ; then
+		debug "Systems replaces '$1' by $2 in $3"
+		return 1
+	fi;
+    if [[ $DEBUG == 1 ]] ; then 
+        debug "Replacing '$1' by $2 in $3"
+    fi;
+	sed -i -e "s/$1/$2/" "$3"
+	return 1
+	
+}
+
 # backups file if exists
 # @param 1 file path
 backup_file(){

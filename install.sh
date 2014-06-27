@@ -402,6 +402,14 @@ debconf shared/proftpd/inetd_or_standalone string $ALTERNC_PROFTPD_STANDALONE pr
 debconf mysql-server/root_password string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
 debconf mysql-server/root_password_again string "$MYSQL_ROOT_PASSWORD" mysql-server-5.5
 
+## dbconfig-commmon
+
+# We deploy a phpmyadmin conf file 
+
+copy "templates/phpadmin.conf" "/etc/dbconfig-common/phpadmin.conf"
+replace "%ALTERNC_PHPMYADMIN_USERPASSWORD%" "$ALTERNC_PHPMYADMIN_USERPASSWORD" "/etc/dbconfig-common/phpadmin.conf"
+
+
 ### Install alternc prerequisites
 
 
@@ -520,9 +528,18 @@ check_service mysqld
 
 # Checks if success : xxx running
 
+## @todo
+
 # Prints passwords 
+
+spacer 
+
+info "You can now visit your Alternc on http://$ALTERNC_DESKTOPNAME"
+
+warn "Please remember to change the default authentification : admin/admin"
 
 # Proposes to send passwords by email
 
+## @todo
 
 
