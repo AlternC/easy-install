@@ -1,1 +1,0 @@
-xgettext -kmisc -kdebug -kwarn -kinfo -kask -kalert install.sh lib_installer.sh -o translations/alternc-easy-install.pot
