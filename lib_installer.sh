@@ -257,9 +257,32 @@ copy(){
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "cp $1 $2"
 		fi;	
-		cp $1 $2
+        ensure_file_path_exists "$2"        
+		cp "$1" "$2"
 	fi;
 }
+
+# Creates folders path for file if necessary  
+# @param 1 a file path
+ensure_file_path_exists(){
+	if [[ $DRY_RUN = 1 ]] ; then
+		debug "System makes sure $1 folder exists"
+	else
+        local dir_path=$(echo "$1" | sed -e "s/\(.*\)\/.*/\1/")
+        if [[ -d "$dir_path" ]] ; then 
+            return 1
+        fi
+        if [[ -f "$dir_path" ]] ; then 
+            warn "Failed to create $dir_path as it is a file already"
+            return 0
+        fi
+		if [[ $DEBUG = 1 ]] ; then 
+            debug "Creating folder $dir_path for file $2"
+		fi;	
+        mkdir -p "$dir_path"
+	fi;
+}
+
 # Encapsulates rm 
 # @param 1 file
 delete(){
