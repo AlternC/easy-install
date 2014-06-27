@@ -407,7 +407,7 @@ debconf mysql-server/root_password_again string "$MYSQL_ROOT_PASSWORD" mysql-ser
 # We deploy a phpmyadmin conf file 
 
 copy "templates/phpmyadmin.conf" "/etc/dbconfig-common/phpmyadmin.conf"
-replace "%ALTERNC_PHPMYADMIN_USERPASSWORD%" "$ALTERNC_PHPMYADMIN_USERPASSWORD" "/etc/dbconfig-common/phpadmin.conf"
+replace "%ALTERNC_PHPMYADMIN_USERPASSWORD%" "$ALTERNC_PHPMYADMIN_USERPASSWORD" "/etc/dbconfig-common/phpmyadmin.conf"
 
 
 ### Install alternc prerequisites
