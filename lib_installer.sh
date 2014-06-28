@@ -149,6 +149,10 @@ alert() {
 }
 
 try_exit() {
+    if [[ "$SILENT" == 1 ]] ;
+        then return 1
+    fi;
+
 	if [ -z $1 ] ; then
 		ask "Do you want to exit the installer? (y/N) "
 	else

@@ -53,7 +53,6 @@ spacer
 
 ### Environment info
 
-
 if [[ $DEBUG == 1 ]] ; then
 
     misc "Debug mode activated."
@@ -129,7 +128,12 @@ done;
 
 ask "Please provide the public IP address"
 
-read ALTERNC_PUBLIC_IP
+if [[ "$SILENT" != 1 ]] ;
+    then read ALTERNC_PUBLIC_IP
+    else if [[ -z $ALTERNC_PUBLIC_IP ]] ; then
+        alert "Missing variable %s for silent install" "ALTERNC_PUBLIC_IP"
+    fi
+fi;
 
 ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
 
@@ -164,7 +168,12 @@ Your AlternC domain name might then look like 'example.alternc.net'"
 
 ask "Do you want to use AlternC.net domain name service? (Y/n)"
 
-read VAR_USE_ALTERNC_SUBDOMAIN
+if [[ "$SILENT" != 1 ]] ;
+    then read VAR_USE_ALTERNC_SUBDOMAIN
+    else if [[ -z $VAR_USE_ALTERNC_SUBDOMAIN ]] ; then
+        alert "Missing variable %s for silent install" "VAR_USE_ALTERNC_SUBDOMAIN"
+    fi
+fi;
 
 check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
 
@@ -185,7 +194,12 @@ if [[ $check=0 ]] ; then
     fi;
     
     ask "  Please provide your AlternC domain name"
-    read ALTERNC_DESKTOPNAME
+if [[ "$SILENT" != 1 ]] ;
+    then read ALTERNC_DESKTOPNAME
+    else if [[ -z $ALTERNC_DESKTOPNAME ]] ; then
+        alert "Missing variable %s for silent install" "ALTERNC_DESKTOPNAME"
+    fi
+fi;
     test_ns "$ALTERNC_DESKTOPNAME"
     
  
@@ -195,7 +209,12 @@ else
     alternc_net_get_domain
 
     ask "Please provide the AlternC.net subdomain name:"
-    read ALTERNC_DESKTOPNAME
+    if [[ "$SILENT" != 1 ]] ;
+        then read ALTERNC_DESKTOPNAME
+        else if [[ -z $ALTERNC_DESKTOPNAME ]] ; then
+            alert "Missing variable %s for silent install" "ALTERNC_DESKTOPNAME"
+        fi
+    fi;
     test_ns "$ALTERNC_DESKTOPNAME"
     
 fi
@@ -225,7 +244,12 @@ highly recommand you the free service we provide (see http://alternc.net )"
 
 ask "Do you want to use AlternC.net name servers ?(Y/n)"
 
-read VAR_USE_ALTERNC_NS
+if [[ "$SILENT" != 1 ]] ;
+    then read VAR_USE_ALTERNC_NS
+    else if [[ -z $VAR_USE_ALTERNC_NS ]] ; then
+        alert "Missing variable %s for silent install" "VAR_USE_ALTERNC_NS"
+    fi
+fi;
 
 check=$(validate $VAR_USE_ALTERNC_NS)
 
@@ -235,11 +259,21 @@ if [[ "$check" == "0" ]] ; then
     info "You need two valid nameservers :"
 
     ask "  Please provide your primary NS server"
-    read ALTERNC_NS1
+    if [[ "$SILENT" != 1 ]] ;
+        then read ALTERNC_NS1
+        else if [[ -z $ALTERNC_NS1 ]] ; then
+            alert "Missing variable %s for silent install" "ALTERNC_NS1"
+        fi
+    fi;
     test_ns $ALTERNC_NS1
     
     ask "  Please provide your secondary NS server"
-    read ALTERNC_NS2
+    if [[ "$SILENT" != 1 ]] ;
+        then read ALTERNC_NS2
+        else if [[ -z $ALTERNC_NS2 ]] ; then
+            alert "Missing variable %s for silent install" "ALTERNC_NS2"
+        fi
+    fi;
     test_ns $ALTERNC_NS2
     
 # User wants to use AlternC NS
@@ -268,7 +302,12 @@ We recommand adding it to your installation.
 
 ask "Would you like to install Roundcube? (Y/n)"
 
-read INSTALL_ROUNDCUBE
+if [[ "$SILENT" != 1 ]] ;
+    then read INSTALL_ROUNDCUBE
+    else if [[ -z $INSTALL_ROUNDCUBE ]] ; then
+        alert "Missing variable %s for silent install" "INSTALL_ROUNDCUBE"
+    fi
+fi;
 
 check=$(validate $INSTALL_ROUNDCUBE)
 
@@ -292,7 +331,12 @@ Mailman is the mailing list software proposed by AlternC.
 
 ask "Would you like to install Mailman? (Y/n)"
 
-read INSTALL_MAILMAN
+if [[ "$SILENT" != 1 ]] ;
+    then read INSTALL_MAILMAN
+    else if [[ -z $INSTALL_MAILMAN ]] ; then
+        alert "Missing variable %s for silent install" "INSTALL_MAILMAN"
+    fi
+fi;
 
 check=$(validate $INSTALL_MAILMAN)
 
