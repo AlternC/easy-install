@@ -53,17 +53,20 @@ spacer
 
 ### Environment info
 
+# Is debug mode ON?
 if [[ $DEBUG == 1 ]] ; then
-
     misc "Debug mode activated."
-
 fi;
 
-
+# Is dry run mode ON?
 if [[ $DRY_RUN == 1 ]] ; then
-
     misc "Dry run mode activated."
+fi;
 
+# Is silent mode ON?
+if [[ "$SILENT" == 1 ]] ; then
+    misc "Silent mode activated."
+    export DEBIAN_FRONTEND=noninteractive
 fi;
 
 ### Installer prequisites
