@@ -1,16 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
-msgid ""
-msgstr ""
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-28 00:28+0200\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-
-#: install.sh:15 install.sh:22 ../install.sh:22
+#: ../install.sh:22
 msgid ""
 "=====                           Licence                            =====\n"
 "\n"
@@ -24,51 +12,85 @@ msgid ""
 "use of or inability to use our products.\n"
 "... yada yada yada ..."
 msgstr ""
+"  ----------------------------------------------------------------------  "
+"AlternC - Web Hosting System  Copyright (C) 2000-2014 by the AlternC "
+"Development Team.  https://alternc.org/  "
+"----------------------------------------------------------------------  "
+"LICENSE    This program is free software; you can redistribute it and/or  "
+"modify it under the terms of the GNU General Public License (GPL)  as "
+"published by the Free Software Foundation; either version 2  of the License, "
+"or (at your option) any later version.    This program is distributed in the "
+"hope that it will be useful,  but WITHOUT ANY WARRANTY; without even the "
+"implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  "
+"See the  GNU General Public License for more details.    To read the license "
+"please visit http://www.gnu.org/copyleft/gpl.html  "
+"----------------------------------------------------------------------"
 
-#: install.sh:52 install.sh:59 ../install.sh:59
+#: ../install.sh:36
+msgid ""
+"=====                           Warning                            =====\n"
+"\n"
+"This installation script for AlternC software is made for %s\n"
+"running on %s %s.\n"
+"\n"
+"It attempts at helping people willing to test or install AlternC for \n"
+"the first time and / or don't know so much about Linux, network etc.\n"
+"\n"
+"Using this script will provide a working installation, but if you need \n"
+"something more specific you might prefer a custom installation.\n"
+"\n"
+"To learn more about the choices made for this installer, please read \n"
+"http://www.alternc.org/simpleInstaller"
+msgstr ""
+
+#: ../install.sh:59
 msgid "Debug mode activated."
 msgstr ""
 
-#: install.sh:60 install.sh:67 ../install.sh:67
+#: ../install.sh:66
 msgid "Dry run mode activated."
 msgstr ""
 
-#: install.sh:71 install.sh:86 install.sh:93 ../install.sh:93
+#: ../install.sh:75
+msgid "Installing mandatory packages"
+msgstr ""
+
+#: ../install.sh:91
 msgid ""
 "You must be root, please authentificate with your user password or run as "
 "root"
 msgstr ""
 
-#: install.sh:76 install.sh:91 install.sh:98 ../install.sh:98
+#: ../install.sh:96
 msgid "Not a DEBIAN system (missing /etc/debian_version)"
 msgstr ""
 
-#: install.sh:84 install.sh:99 install.sh:106 ../install.sh:106
+#: ../install.sh:104
 msgid "This machine is not connected to Internet."
 msgstr ""
 
-#: install.sh:90 install.sh:70 install.sh:77 ../install.sh:77
-msgid "Installing mandatory packages"
+#: ../install.sh:110
+msgid "AlternC already installed, nothing to do."
 msgstr ""
 
-#: install.sh:110 install.sh:115 install.sh:122 ../install.sh:122
+#: ../install.sh:120
 msgid ""
-"=====        Your Alternc server needs a public IP Address         =====\n"
+"=====        Your AlternC server needs a public IP Address         =====\n"
 "\n"
 "This makes it available on the web from everywhere in the world."
 msgstr ""
 
-#: install.sh:114 install.sh:119 install.sh:126 ../install.sh:126
+#: ../install.sh:124
 msgid "For your information, here are the internet addresses of this machine:"
 msgstr ""
 
-#: install.sh:120 install.sh:125 install.sh:132 ../install.sh:132
+#: ../install.sh:130
 msgid "Please provide the public IP address"
 msgstr ""
 
-#: install.sh:135 install.sh:140 install.sh:147 ../install.sh:147
+#: ../install.sh:145
 msgid ""
-"=====              Your Alternc needs a domain name                =====\n"
+"=====              Your AlternC needs a domain name                =====\n"
 "\n"
 "This domain name will be used to access the panel and send/receive mail.\n"
 "                                         \n"
@@ -80,26 +102,30 @@ msgid ""
 "allowing you to still have your website on 'www.example.com'\n"
 "\n"
 "If you are unsure, here are a few solutions: \n"
-"1.  Create a subdomain dedicated to alternc on a domain name you own\n"
-"2.  Use the free alternc.net domain name service      \n"
+"1.  Create a subdomain dedicated to AlternC on a domain name you own\n"
+"2.  Use the free AlternC.net domain name service      \n"
 "        \n"
-"We recommand using the alternc.net subdomain name if you are new to this.\n"
-"You'll only need to request your subdomain on http://alternc.net and \n"
+"We recommand using the AlternC.net subdomain name if you are new to this.\n"
+"You'll only need to request your subdomain on http://www.alternc.net and \n"
 "point it to the IP address you just provided.\n"
-"Your alternc domain name might then look like 'example.alternc.net'"
+"Your AlternC domain name might then look like 'example.alternc.net'"
 msgstr ""
 
-#: install.sh:155 install.sh:160
-msgid "Do you want to use alternc.net domain name service?  y/n"
+#: ../install.sh:165
+msgid "Do you want to use AlternC.net domain name service? (Y/n)"
 msgstr ""
 
-#: install.sh:164 install.sh:182 install.sh:189 ../install.sh:189
-msgid "  Please provide your Alternc domain name"
+#: ../install.sh:187
+msgid "  Please provide your AlternC domain name"
 msgstr ""
 
-#: install.sh:178 install.sh:214 install.sh:221 ../install.sh:221
+#: ../install.sh:197
+msgid "Please provide the AlternC.net subdomain name:"
+msgstr ""
+
+#: ../install.sh:219
 msgid ""
-"=====              Your Alternc needs DNS Servers                =====\n"
+"=====              Your AlternC needs DNS Servers                =====\n"
 "\n"
 "Domain Name Servers announce addresses of the domain names on the web.\n"
 "\n"
@@ -107,53 +133,83 @@ msgid ""
 "highly recommand you the free service we provide (see http://alternc.net )"
 msgstr ""
 
-#: install.sh:185 install.sh:221
-msgid "Do you want to use Alternc.net name servers ? y/n"
+#: ../install.sh:226
+msgid "Do you want to use AlternC.net name servers ?(Y/n)"
 msgstr ""
 
-#: install.sh:194 install.sh:230 install.sh:237 ../install.sh:237
+#: ../install.sh:235
 msgid "You need two valid nameservers :"
 msgstr ""
 
-#: install.sh:196 install.sh:232 install.sh:239 ../install.sh:239
+#: ../install.sh:237
 msgid "  Please provide your primary NS server"
 msgstr ""
 
-#: install.sh:200 install.sh:236 install.sh:243 ../install.sh:243
+#: ../install.sh:241
 msgid "  Please provide your secondary NS server"
 msgstr ""
 
-#: install.sh:220 install.sh:256 install.sh:263 ../install.sh:263
+#: ../install.sh:261
 msgid ""
 "\n"
 "=====           Optional installation: roundcube webmail           =====\n"
 "\n"
-"Roundcube is the webmail software proposed by alternc.\n"
+"Roundcube is the webmail software proposed by AlternC.\n"
 "\n"
 "We recommand adding it to your installation.\n"
 msgstr ""
 
-#: install.sh:228 install.sh:264
-msgid "Would you like to install Roundcube? (y/n)"
+#: ../install.sh:269
+msgid "Would you like to install Roundcube? (Y/n)"
 msgstr ""
 
-#: install.sh:245 install.sh:282 install.sh:289 ../install.sh:289
+#: ../install.sh:280
+msgid "Roundcube added to your configuration"
+msgstr ""
+
+#: ../install.sh:287
 msgid ""
 "\n"
 "=====      Optional installation: mailman mailing list manager     =====\n"
 "\n"
-"Mailman is the mailing list software proposed by alternc.\n"
+"Mailman is the mailing list software proposed by AlternC.\n"
 msgstr ""
 
-#: install.sh:251 install.sh:288
-msgid "Would you like to install Mailman? (y/n)"
+#: ../install.sh:293
+msgid "Would you like to install Mailman? (Y/n)"
 msgstr ""
 
-#: install.sh:299 install.sh:384 install.sh:425 ../install.sh:425
+#: ../install.sh:304
+msgid "Mailman added to your configuration"
+msgstr ""
+
+#: ../install.sh:307
+msgid "By default mailman is installed with french and english."
+msgstr ""
+
+#: ../install.sh:308
+msgid "Do you want to use french as default language? (Y/n)"
+msgstr ""
+
+#: ../install.sh:423
 msgid "Editing and backuping your /etc/fstab file"
 msgstr ""
 
-#: install.sh:340 install.sh:425 install.sh:506 ../install.sh:506
+#: ../install.sh:477
+msgid "Something went wrong, could not find the AlternC package in the sources"
+msgstr ""
+
+#: ../install.sh:494
+msgid "Running the alternc.install script"
+msgstr ""
+
+#: ../install.sh:496
+msgid ""
+"Something went wrong with your installation : alternc.install script  not "
+"found."
+msgstr ""
+
+#: ../install.sh:504
 msgid ""
 "An important password has just been generated.\n"
 "\n"
@@ -164,101 +220,107 @@ msgid ""
 "For your information this password is : "
 msgstr ""
 
-#: install.sh:350 install.sh:435
-msgid ""
-"To keep this installer as simple as possible, we're starting with\n"
-"an empty password and we'll set up the real password at the end."
-msgstr ""
-
-#: install.sh:386 install.sh:471 install.sh:479 ../install.sh:479
-msgid "Something went wrong, could not find the alternc package in the sources"
-msgstr ""
-
-#: install.sh:441 install.sh:485 install.sh:498 ../install.sh:498
-msgid ""
-"Something went wrong with your installation : alternc.install script  not "
-"found."
-msgstr ""
-
-#: lib_installer.sh:74 lib_installer.sh:82 lib_installer.sh:89
-#: lib_installer.sh:105 lib_installer.sh:115 lib_installer.sh:126
-#: lib_installer.sh:88 lib_installer.sh:96 lib_installer.sh:103
-#: lib_installer.sh:119 lib_installer.sh:129 lib_installer.sh:140
-#: lib_installer.sh:92 lib_installer.sh:100 lib_installer.sh:107
-#: lib_installer.sh:123 lib_installer.sh:133 lib_installer.sh:144
-#: ../lib_installer.sh:92 ../lib_installer.sh:100 ../lib_installer.sh:107
-#: ../lib_installer.sh:123 ../lib_installer.sh:133 ../lib_installer.sh:144
-#: ../lib_installer.sh:93 ../lib_installer.sh:101 ../lib_installer.sh:108
-#: ../lib_installer.sh:124 ../lib_installer.sh:134 ../lib_installer.sh:145
-msgid "-d"
-msgstr ""
-
-#: lib_installer.sh:135
-msgid "Do you want to exit the installer? (enter y to exit) "
-msgstr ""
-
-#: lib_installer.sh:169 lib_installer.sh:183 lib_installer.sh:187
-#: ../lib_installer.sh:187 ../lib_installer.sh:188
-msgid "missing domain name"
-msgstr ""
-
-#: install.sh:105 install.sh:112 ../install.sh:112
-msgid "Alternc already installed, nothing to do."
-msgstr ""
-
-#: install.sh:192 install.sh:199 ../install.sh:199
-msgid "Please provide the alternc.net subdomain name:"
-msgstr ""
-
-#: install.sh:275 install.sh:282 ../install.sh:282
-msgid "Roundcube added to your configuration"
-msgstr ""
-
-#: install.sh:299 install.sh:306 ../install.sh:306
-msgid "Mailman added to your configuration"
-msgstr ""
-
-#: install.sh:302 install.sh:309 ../install.sh:309
-msgid "By default mailman is installed with french and english."
-msgstr ""
-
-#: install.sh:303
-msgid "Do you want to use french as default language? (y/n)"
-msgstr ""
-
-#: lib_installer.sh:149 lib_installer.sh:153 ../lib_installer.sh:153
-#: ../lib_installer.sh:154
-msgid "Do you want to exit the installer? (y/N) "
-msgstr ""
-
-#: install.sh:167 ../install.sh:167
-msgid "Do you want to use alternc.net domain name service? (Y/n)"
-msgstr ""
-
-#: install.sh:228 ../install.sh:228
-msgid "Do you want to use Alternc.net name servers ?(Y/n)"
-msgstr ""
-
-#: install.sh:271 ../install.sh:271
-msgid "Would you like to install Roundcube? (Y/n)"
-msgstr ""
-
-#: install.sh:295 ../install.sh:295
-msgid "Would you like to install Mailman? (Y/n)"
-msgstr ""
-
-#: install.sh:310 ../install.sh:310
-msgid "Do you want to use french as default language? (Y/n)"
-msgstr ""
-
-#: install.sh:496 ../install.sh:496
-msgid "Running the alternc.install script"
-msgstr ""
-
-#: install.sh:539 ../install.sh:539
+#: ../install.sh:537
 msgid "Please remember to change the default authentification : admin/admin"
 msgstr ""
 
-#: lib_installer.sh:408 ../lib_installer.sh:408 ../lib_installer.sh:409
+#: ../lib_installer.sh:93 ../lib_installer.sh:102 ../lib_installer.sh:110
+#: ../lib_installer.sh:120 ../lib_installer.sh:130 ../lib_installer.sh:142
+msgid "-d"
+msgstr ""
+
+#: ../lib_installer.sh:141
+msgid "A critical error occured: "
+msgstr ""
+
+#: ../lib_installer.sh:144
+msgid "Exiting."
+msgstr ""
+
+#: ../lib_installer.sh:153
+msgid "Do you want to exit the installer? (y/N) "
+msgstr ""
+
+#: ../lib_installer.sh:184
+msgid "System should execute %s"
+msgstr ""
+
+#: ../lib_installer.sh:199
+msgid "missing domain name"
+msgstr ""
+
+#: ../lib_installer.sh:204
+msgid "%s is not a valid domain name"
+msgstr ""
+
+#: ../lib_installer.sh:206
+msgid "%s is a valid domain name"
+msgstr ""
+
+#: ../lib_installer.sh:219
+msgid "%s doesn't seem to be a valid local ip"
+msgstr ""
+
+#: ../lib_installer.sh:269
+msgid "System copies %s as %s"
+msgstr ""
+
+#: ../lib_installer.sh:272
+msgid "cp %s %s"
+msgstr ""
+
+#: ../lib_installer.sh:283
+msgid "System makes sure path for %s  exists"
+msgstr ""
+
+#: ../lib_installer.sh:290
+msgid "Failed to create %s as it is a file already"
+msgstr ""
+
+#: ../lib_installer.sh:294
+msgid "Creating folder %s for file %s"
+msgstr ""
+
+#: ../lib_installer.sh:304
+msgid "System deletes %s"
+msgstr ""
+
+#: ../lib_installer.sh:312
+msgid "Deleting %s"
+msgstr ""
+
+#: ../lib_installer.sh:324
+msgid "System writes '%s' \\nin %s"
+msgstr ""
+
+#: ../lib_installer.sh:327
+msgid "Writing '%s' \\nin %s"
+msgstr ""
+
+#: ../lib_installer.sh:348
+msgid "Systems inserts '%s' in %s at line #%s"
+msgstr ""
+
+#: ../lib_installer.sh:363
+msgid "Systems replaces '%s' by %s in %s"
+msgstr ""
+
+#: ../lib_installer.sh:367
+msgid "Replacing '%s' by %s in %s"
+msgstr ""
+
+#: ../lib_installer.sh:378
+msgid "Systems makes a backup of %s"
+msgstr ""
+
+#: ../lib_installer.sh:406
+msgid "Missing service name %s"
+msgstr ""
+
+#: ../lib_installer.sh:422
 msgid "System edits the fstab to activate acl and quota "
+msgstr ""
+
+#: ../lib_installer.sh:439
+msgid "%s is not a valid file"
 msgstr ""

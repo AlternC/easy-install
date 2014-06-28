@@ -1,14 +1,10 @@
-
-
-ALTERNC_VERSION="Alternc 3.2"
+# Versions
+ALTERNC_VERSION="AlternC 3.2"
 DEBIAN_VERSION="Wheezy Debian"
 DEBIAN_VERSION_NUMBER="7"
 
-# translations
-# @see http://mywiki.wooledge.org/BashFAQ/098
-export TEXTDOMAIN=alternc-easy-install
-export TEXTDOMAINDIR=$(pwd)/translations
 
+# Colors
 COL_GRAY="\x1b[30;01m"
 COL_RED="\x1b[31;01m"
 COL_GREEN="\x1b[32;01m"
@@ -21,7 +17,7 @@ COL_RESET="\x1b[39;49;00m"
 
 E_CDERROR=65
 
-#Alternc variables
+#AlternC variables
 ALTERNC_ACLUNINSTALLED=""
 ALTERNC_ALTERNC_HTML=/var/www/alternc
 ALTERNC_ALTERNC_LOCATION=/var/alternc
@@ -30,7 +26,7 @@ ALTERNC_ALTERNC_MAIL=/var/mail/alternc
 ALTERNC_DEFAULT_MX2=""
 ALTERNC_DEFAULT_MX=""
 ALTERNC_DESKTOPNAME=""
-ALTERNC_HOSTINGNAME=Alternc
+ALTERNC_HOSTINGNAME=AlternC
 ALTERNC_INTERNAL_IP=""
 ALTERNC_MONITOR_IP="127.0.0.1"
 ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD=""
@@ -83,13 +79,18 @@ VAR_TEST_IP=91.194.60.1
 VAR_HAS_NET=0
 
 
-# Output utilities
+# Output & Translations utilities 
+# @see http://mywiki.wooledge.org/BashFAQ/098
+# @see http://www.linuxtopia.org/online_books/advanced_bash_scripting_guide/localization.html
+export TEXTDOMAIN=alternc-easy-install
+export TEXTDOMAINDIR=$(pwd)/translations
 
 debug() {
 
 	echo -e $COL_PURPLE;
 	local format=$1
-	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
+    shift
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" # >&1
 	echo -e $COL_RESET;
 }
 
@@ -97,21 +98,16 @@ misc() {
 	
 	echo -e $COL_GRAY;
 	local format=$1
-	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
+    shift
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" # >&1
 	echo -e $COL_RESET;
 
 }
 ask() {
 	echo -e $COL_WHITE;
 	local format="$1"
-	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
-	echo -e $COL_RESET;
-
-}
-spacer() {
-	
-	echo -e $COL_GRAY;
-	echo -e " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+    shift
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" # >&1
 	echo -e $COL_RESET;
 
 }
@@ -120,6 +116,7 @@ info() {
 	
 	echo -e $COL_GREEN;
 	local format=$@
+    shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@"
 	echo -e $COL_RESET;
 
@@ -130,7 +127,7 @@ warn() {
 	echo -e $COL_RED;
 	local format=$1
 	shift
-	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&1
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" 
 	echo -e $COL_RESET;
 
 }
@@ -140,9 +137,12 @@ alert() {
 	echo -e $COL_RED;
 	local format=$1
 	shift
-	printf "\nA critical error occured: " >&2
-	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" >&2
-	printf "\nExiting. " >&2
+	printf "\n"
+    printf "$(gettext 'A critical error occured: ' )" 
+	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" 
+	printf "\n"
+    printf "$(gettext 'Exiting.'  )" 
+	printf "\n"
 	echo -e $COL_RESET;
 	exit $E_CDERROR
 
@@ -156,9 +156,18 @@ try_exit() {
 	fi;
 	read VAR_SKIP;
 	if [[ "y" == ${VAR_SKIP,,} || "o" == ${VAR_SKIP,,} ]] ; 
-		then echo "Exiting";
+		then warn "Exiting";
 		exit 1;
 	fi;
+}
+
+
+spacer() {
+	
+	echo -e $COL_GRAY;
+	echo -e " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e $COL_RESET;
+
 }
 
 ### Various utilities
@@ -172,7 +181,7 @@ apt_get() {
 	done
 	local cmd="apt-get install -y$str"
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "System should execute $cmd"
+		debug "System should execute %s" $str
 	else
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "$cmd"
@@ -180,6 +189,9 @@ apt_get() {
 		$cmd
 	fi;
 }
+
+
+# Testing utilities
 
 test_ns() {
 	local NS=$1
@@ -189,9 +201,9 @@ test_ns() {
 	fi;
 	local cmd="$(dig +short A $NS)"
 	if [[ $cmd = "" ]] ; then
-		warn "$NS is not a valid domain name"
+		warn "%s is not a valid domain name" "$NS"
 	else 
-		info "$NS is a valid domain name"
+		info "%s is a valid domain name" "$NS"
 	fi;
 }
 
@@ -204,9 +216,11 @@ test_local_ip() {
 		fi;
 	done;
 	if [ $VALID = 0 ] ; then 
-		warn "$IP doesn't seem to be a valid local ip"
+		warn "%s doesn't seem to be a valid local ip" "$IP"
 	fi;
 }
+
+
 # Sets a debconf variable
 # @param 1 var
 # @param 2 type
@@ -220,10 +234,10 @@ debconf() {
 		database="$4"	
 	fi;
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "# debconf $database $1 $2 $3"
+		debug "# debconf $database %s %s %s" "$1" "$2" "$3"
 	else
 		if [[ $DEBUG == 1 ]] ; then 
-			debug "debconf $database $1 $2 $3"
+			debug "debconf $database %s %s %s" "$1" "$2" "$3"
 		fi;	
 		# sets the selection
 		echo "$database $1 $2 $3" | debconf-set-selections
@@ -252,10 +266,10 @@ alternc_net_get_domain(){
 # @param 2 target file 
 copy(){
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "System copies $1 as $2"
+		debug "System copies %s as %s" "$1" "$2" 
 	else
 		if [[ $DEBUG = 1 ]] ; then 
-			debug "cp $1 $2"
+			debug "cp %s %s" "$1" "$2" 
 		fi;	
         ensure_file_path_exists "$2"        
 		cp "$1" "$2"
@@ -266,18 +280,18 @@ copy(){
 # @param 1 a file path
 ensure_file_path_exists(){
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "System makes sure $1 folder exists"
+		debug "System makes sure path for %s  exists" "$1"
 	else
         local dir_path=$(echo "$1" | sed -e "s/\(.*\)\/.*/\1/")
         if [[ -d "$dir_path" ]] ; then 
             return 1
         fi
         if [[ -f "$dir_path" ]] ; then 
-            warn "Failed to create $dir_path as it is a file already"
+            warn "Failed to create %s as it is a file already" "$dir_path"
             return 0
         fi
 		if [[ $DEBUG = 1 ]] ; then 
-            debug "Creating folder $dir_path for file $2"
+            debug "Creating folder %s for file %s" "$dir_path" "$1"
 		fi;	
         mkdir -p "$dir_path"
 	fi;
@@ -287,7 +301,7 @@ ensure_file_path_exists(){
 # @param 1 file
 delete(){
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "System deletes $1"
+		debug "System deletes %s" "$1"
 		return 1
 	fi
 	# If no file, exit
@@ -295,7 +309,7 @@ delete(){
 		return 1
 	fi
 	if [[ $DEBUG = 1 ]] ; then 
-		debug "Deleting $1"
+		debug "Deleting %s" "$1"
 	fi;	
 	rm -f $1
 	return 1
@@ -307,10 +321,10 @@ delete(){
 write() {
 	
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "System writes '$1' \nin $2"
+		debug "System writes '%s' \nin %s" "$1" "$2"
 	else
 		if [[ $DEBUG == 1 ]] ; then 
-			debug "# writing '$1' \nin $2"
+			debug "Writing '%s' \nin %s" "$1" "$2"
 		fi;	
 		# backups file if exists
 		backup_file "$2"
@@ -331,7 +345,7 @@ write() {
 # @param 3 line
 insert(){
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "Systems inserts '$3' in $1 at line #$2"
+		debug "Systems inserts '%s' in %s at line #%s" "$3" "$1" "$2" 
 		return 1
 	fi;
 	sed -i "$2 i\
@@ -346,11 +360,11 @@ $3"	 $1
 # @param 3 file path
 replace(){
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "Systems replaces '$1' by $2 in $3"
+		debug "Systems replaces '%s' by %s in %s" "$1" "$2" "$3"
 		return 1
 	fi;
     if [[ $DEBUG == 1 ]] ; then 
-        debug "Replacing '$1' by $2 in $3"
+        debug "Replacing '%s' by %s in %s" "$1" "$2" "$3"
     fi;
 	sed -i -e "s/$1/$2/" "$3"
 	return 1
@@ -361,7 +375,7 @@ replace(){
 # @param 1 file path
 backup_file(){
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "Systems makes a backup of $1"
+		debug "Systems makes a backup of %s" "$1"
 		return 1
 	fi;
 	if [ -f "$1" ] ; then
@@ -377,7 +391,7 @@ backup_file(){
 			fi;
 		done;
 		if [[ $DEBUG == 1 ]] ; then 
-			debug "File ${1} backed as $1.$num"
+			debug "File %s backed as %s.$num" "$1" "$1"
 		fi;
 		return 1
 	fi;
@@ -389,7 +403,7 @@ backup_file(){
 #			This must be an /etc/init.d script name
 check_service() {
 	if [ -z $1 ] ; then
-		alert "Missing service name $@"
+		alert "Missing service name %s" "$1"
 	fi;
 	local service=$1
 	if [ $(pgrep $1 | wc -l) -eq 0 ] ; then
@@ -422,7 +436,7 @@ fstab_quota_and_acl(){
 	else 
 		file="$1"
 		if [ ! -f "$1" ] ; then 
-			warn "$1 is not a valid file"
+			warn "%s is not a valid file" "$1"
 		fi
 	fi;
 	# Runs through each line of the fstab file

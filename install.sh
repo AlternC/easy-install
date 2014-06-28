@@ -35,17 +35,17 @@ spacer
 
 warn "=====                           Warning                            =====
 
-This installation script for Alternc software is made for $ALTERNC_VERSION
-running on $DEBIAN_VERSION $DEBIAN_VERSION_NUMBER.
+This installation script for AlternC software is made for %s
+running on %s %s.
 
-It attempts at helping people willing to test or install Alternc for 
+It attempts at helping people willing to test or install AlternC for 
 the first time and / or don't know so much about Linux, network etc.
 
 Using this script will provide a working installation, but if you need 
 something more specific you might prefer a custom installation.
 
 To learn more about the choices made for this installer, please read 
-http://www.alternc.org/simpleInstaller";
+http://www.alternc.org/simpleInstaller" "$ALTERNC_VERSION" "$DEBIAN_VERSION" "$DEBIAN_VERSION_NUMBER"
 
 try_exit
 
@@ -56,16 +56,14 @@ spacer
 
 if [[ $DEBUG == 1 ]] ; then
 
-    warn "Debug mode activated."
-    spacer
+    misc "Debug mode activated."
 
 fi;
 
 
 if [[ $DRY_RUN == 1 ]] ; then
 
-    warn "Dry run mode activated."
-    spacer
+    misc "Dry run mode activated."
 
 fi;
 
@@ -109,7 +107,7 @@ fi
 # Exits if alternc present 
 
 if [[ $(dpkg-query -W -f='${Status}' alternc 2>/dev/null | grep -c "ok installed") == 1 ]] ; then 
-	alert "Alternc already installed, nothing to do." ; 
+	alert "AlternC already installed, nothing to do." ; 
 fi;
 
 
@@ -119,7 +117,7 @@ fi;
 
 spacer
 
-info "=====        Your Alternc server needs a public IP Address         =====
+info "=====        Your AlternC server needs a public IP Address         =====
 
 This makes it available on the web from everywhere in the world."
 
@@ -144,7 +142,7 @@ test_local_ip $ALTERNC_PUBLIC_IP
 
 spacer
 
-info "=====              Your Alternc needs a domain name                =====
+info "=====              Your AlternC needs a domain name                =====
 
 This domain name will be used to access the panel and send/receive mail.
                                          
@@ -156,15 +154,15 @@ hosting service by itself. 'panel.example.com' will work better,
 allowing you to still have your website on 'www.example.com'
 
 If you are unsure, here are a few solutions: 
-1.  Create a subdomain dedicated to alternc on a domain name you own
-2.  Use the free alternc.net domain name service      
+1.  Create a subdomain dedicated to AlternC on a domain name you own
+2.  Use the free AlternC.net domain name service      
         
-We recommand using the alternc.net subdomain name if you are new to this.
-You'll only need to request your subdomain on http://alternc.net and 
+We recommand using the AlternC.net subdomain name if you are new to this.
+You'll only need to request your subdomain on http://www.alternc.net and 
 point it to the IP address you just provided.
-Your alternc domain name might then look like 'example.alternc.net'"
+Your AlternC domain name might then look like 'example.alternc.net'"
 
-ask "Do you want to use alternc.net domain name service? (Y/n)"
+ask "Do you want to use AlternC.net domain name service? (Y/n)"
 
 read VAR_USE_ALTERNC_SUBDOMAIN
 
@@ -186,7 +184,7 @@ if [[ $check=0 ]] ; then
   $MAILNAME"
     fi;
     
-    ask "  Please provide your Alternc domain name"
+    ask "  Please provide your AlternC domain name"
     read ALTERNC_DESKTOPNAME
     test_ns "$ALTERNC_DESKTOPNAME"
     
@@ -196,7 +194,7 @@ else
 	#todo 
     alternc_net_get_domain
 
-    ask "Please provide the alternc.net subdomain name:"
+    ask "Please provide the AlternC.net subdomain name:"
     read ALTERNC_DESKTOPNAME
     test_ns "$ALTERNC_DESKTOPNAME"
     
@@ -216,16 +214,16 @@ insert /etc/hosts 2 "127.0.0.1\t$ALTERNC_DESKTOPNAME"
 
 ## DNS
 
-# Asks if user wants to use the alternc services for DNS
+# Asks if user wants to use the AlternC services for DNS
 
-info "=====              Your Alternc needs DNS Servers                =====
+info "=====              Your AlternC needs DNS Servers                =====
 
 Domain Name Servers announce addresses of the domain names on the web.
 
 If you don't have at least two name servers with minimal redundancy, we
 highly recommand you the free service we provide (see http://alternc.net )"
 
-ask "Do you want to use Alternc.net name servers ?(Y/n)"
+ask "Do you want to use AlternC.net name servers ?(Y/n)"
 
 read VAR_USE_ALTERNC_NS
 
@@ -244,7 +242,7 @@ if [[ "$check" == "0" ]] ; then
     read ALTERNC_NS2
     test_ns $ALTERNC_NS2
     
-# User wants to use Alternc NS
+# User wants to use AlternC NS
 
 else
     ALTERNC_NS1="ns1.alternc.net"
@@ -254,7 +252,7 @@ fi
 
 
 
-## alternc modules 
+## AlternC modules 
 
 # Asks if roundcube is required
 
@@ -263,7 +261,7 @@ spacer
 info "
 =====           Optional installation: roundcube webmail           =====
 
-Roundcube is the webmail software proposed by alternc.
+Roundcube is the webmail software proposed by AlternC.
 
 We recommand adding it to your installation.
 "
@@ -289,7 +287,7 @@ spacer
 info "
 =====      Optional installation: mailman mailing list manager     =====
 
-Mailman is the mailing list software proposed by alternc.
+Mailman is the mailing list software proposed by AlternC.
 "
 
 ask "Would you like to install Mailman? (Y/n)"
@@ -337,24 +335,24 @@ ALTERNC_MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 ### Debconf parameters
 
 
-# alternc
+# alternC
 debconf alternc/acluninstalled string "$ALTERNC_ACLUNINSTALLED"
 debconf alternc/quotauninstalled string "$ALTERNC_QUOTAUNINSTALLED"
 debconf alternc/desktopname string "$ALTERNC_DESKTOPNAME"
 debconf alternc/hostingname string "$ALTERNC_HOSTINGNAME"
 debconf alternc/ns1 string "$ALTERNC_NS1"
 debconf alternc/ns2 string "$ALTERNC_NS2"
-debconf alternc/alternc_html string "$ALTERNC_ALTERNC_HTML"
-debconf alternc/alternc_mail string "$ALTERNC_ALTERNC_MAIL"
-debconf alternc/alternc_logs string "$ALTERNC_ALTERNC_LOGS"
+debconf alternc/alternC_html string "$ALTERNC_ALTERNC_HTML"
+debconf alternc/alternC_mail string "$ALTERNC_ALTERNC_MAIL"
+debconf alternc/alternC_logs string "$ALTERNC_ALTERNC_LOGS"
 debconf alternc/mysql/host string "$ALTERNC_MYSQL_HOST"
 debconf alternc/mysql/db string "$ALTERNC_MYSQL_DB"
 debconf alternc/mysql/user string "$ALTERNC_MYSQL_USER"
 debconf alternc/mysql/remote_user string "$ALTERNC_MYSQL_REMOTE_USER"
 debconf alternc/mysql/password string "$MYSQL_ROOT_PASSWORD"
 debconf alternc/mysql/remote_password string "$ALTERNC_MYSQL_REMOTE_PASSWORD"
-debconf alternc/mysql/alternc_mail_user string "$ALTERNC_MYSQL_ALTERNC_MAIL_USER"
-debconf alternc/mysql/alternc_mail_password string "$ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD"
+debconf alternc/mysql/alternC_mail_user string "$ALTERNC_MYSQL_ALTERNC_MAIL_USER"
+debconf alternc/mysql/alternC_mail_password string "$ALTERNC_MYSQL_ALTERNC_MAIL_PASSWORD"
 debconf alternc/mysql/client string "$ALTERNC_MYSQL_CLIENT"
 debconf alternc/sql/backup_type string "$ALTERNC_SQL_BACKUP_TYPE"
 debconf alternc/sql/backup_overwrite string "$ALTERNC_SQL_BACKUP_OVERWRITE"
@@ -362,7 +360,7 @@ debconf alternc/public_ip string "$ALTERNC_PUBLIC_IP"
 debconf alternc/internal_ip string "$ALTERNC_INTERNAL_IP"
 debconf alternc/default_mx string "$ALTERNC_DEFAULT_MX"
 debconf alternc/default_mx2 string "$ALTERNC_DEFAULT_MX2"
-debconf alternc/alternc_location string "$ALTERNC_ALTERNC_LOCATION"
+debconf alternc/alternC_location string "$ALTERNC_ALTERNC_LOCATION"
 debconf alternc/monitor_ip string "$ALTERNC_MONITOR_IP"
 debconf alternc/postrm_remove_databases string "$ALTERNC_POSTRM_REMOVE_DATABASES"
 debconf alternc/postrm_remove_datafiles string "$ALTERNC_POSTRM_REMOVE_DATAFILES"
@@ -376,7 +374,7 @@ debconf alternc/use_private_ip string "$ALTERNC_USE_PRIVATE_IP"
 debconf alternc/remote_mysql_error string "$ALTERNC_REMOTE_MYSQL_ERROR"
 
 # mailman
-debconf alternc-mailman/patch-mailman string "$ALTERNC_MAILMAN_PATCH_MAILMAN" alternc-mailman
+debconf alternC-mailman/patch-mailman string "$ALTERNC_MAILMAN_PATCH_MAILMAN" alternC-mailman
 debconf mailman/site_languages string "$ALTERNC_MAILMAN_SITE_LANGUAGES" mailman
 debconf mailman/used_languages string "$ALTERNC_MAILMAN_USED_LANGUAGES" mailman
 debconf mailman/default_server_language string "$ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE" mailman
@@ -410,7 +408,7 @@ copy "templates/phpmyadmin.conf" "/etc/dbconfig-common/phpmyadmin.conf"
 replace "%ALTERNC_PHPMYADMIN_USERPASSWORD%" "$ALTERNC_PHPMYADMIN_USERPASSWORD" "/etc/dbconfig-common/phpmyadmin.conf"
 
 
-### Install alternc prerequisites
+### Install AlternC prerequisites
 
 
 ## FS 
@@ -476,14 +474,14 @@ apt-get update
 
 # Checks list success
 if [[ -z $(apt-cache search alternc) ]] ; then 
-    alert "Something went wrong, could not find the alternc package in the sources";
+    alert "Something went wrong, could not find the AlternC package in the sources";
 fi;
 
 
-### Alternc install
+### AlternC install
 
-# Starts the alternc install 
-apt_get alternc 
+# Starts the AlternC install 
+apt_get alternc
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
@@ -534,7 +532,7 @@ check_service mysqld
 
 spacer 
 
-info "You can now visit your Alternc on http://$ALTERNC_DESKTOPNAME"
+info "You can now visit your AlternC on http://$ALTERNC_DESKTOPNAME"
 
 warn "Please remember to change the default authentification : admin/admin"
 
