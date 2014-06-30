@@ -21,7 +21,7 @@ msgstr ""
 "  ----------------------------------------------------------------------\n"
 "  AlternC - Web Hosting System\n"
 "  Copyright (C) 2000-2014 by the AlternC Development Team.\n"
-"  https://alternC.org/\n"
+"  https://alternc.org/\n"
 "  ----------------------------------------------------------------------\n"
 "  LICENSE\n"
 "  \n"
@@ -77,7 +77,7 @@ msgstr ""
 "installation manuelle du logiciel.\n"
 "\n"
 "Pour en savoir plus sur les choix fait pour cet installeur, vous pouvez\n"
-"consulter le site d'AlternC http://www.alternC.org/simpleInstaller "
+"consulter le site d'AlternC http://www.alternc.org/simpleInstaller "
 
 #: ../install.sh:59
 msgid "Debug mode activated."
@@ -203,7 +203,7 @@ msgstr ""
 "noms de domaines de vos hébergés\n"
 "\n"
 "Nous recommandons vivement d'utiliser le service libre et gratuit que \n"
-"nous proposons (voir http://www.alternC.net) si vous ne disposez pas\n"
+"nous proposons (voir http://www.alternc.net) si vous ne disposez pas\n"
 "de votre propre infrastructure DNS à redondance minimale."
 
 #: ../install.sh:226
@@ -287,13 +287,13 @@ msgstr ""
 
 #: ../install.sh:494
 msgid "Running the alternc.install script"
-msgstr "Exécution du script alternC.install"
+msgstr "Exécution du script alternc.install"
 
 #: ../install.sh:496
 msgid ""
 "Something went wrong with your installation : alternc.install script  not "
 "found."
-msgstr "Problème, le script alternC.install n'est pas présent."
+msgstr "Problème, le script alternc.install n'est pas présent."
 
 #: ../install.sh:504
 msgid ""
