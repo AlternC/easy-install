@@ -521,7 +521,7 @@ delete $ALTERNC_SOURCE_LIST_FILE
 delete $BACKPORTS_SOURCE_LIST_FILE
 
 # Creates new debian sources file 
-copy  $ALTERNC_SOURCE_LIST_FILE
+copy  $ALTERNC_SOURCE_TEMPLATE $ALTERNC_SOURCE_LIST_FILE
 
 # Creates new  backports sources file if required
 if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 

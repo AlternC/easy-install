@@ -239,7 +239,7 @@ debconf() {
 		database="$4"	
 	fi;
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "# debconf $database %s %s %s" "$1" "$2" "$3"
+		debug "[OK] debconf $database %s %s %s" "$1" "$2" "$3"
 	else
 		if [[ $DEBUG == 1 ]] ; then 
 			debug "debconf $database %s %s %s" "$1" "$2" "$3"
@@ -276,8 +276,24 @@ copy(){
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "cp %s %s" "$1" "$2" 
 		fi;	
-        ensure_file_path_exists "$2"        
+        ensure_file_exists "$1"  
+        ensure_file_path_exists "$2"
 		cp "$1" "$2"
+	fi;
+}
+
+# Makes sure a necessary file exists, or exits  
+# @param 1 a file path
+ensure_file_exists(){
+	if [[ $DRY_RUN = 1 ]] ; then
+		debug "System makes sure file %s  exists" "$1"
+	else
+		if [[ $DEBUG = 1 ]] ; then 
+            debug "Checking file %s exists" "$1"
+		fi;	
+        if [[ ! -f "$1" ]] ; then
+            alert "File %s does not exist" "$1"
+        fi;
 	fi;
 }
 
