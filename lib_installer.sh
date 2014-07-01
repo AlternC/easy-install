@@ -115,7 +115,7 @@ ask() {
 info() {
 	
 	echo -e $COL_GREEN;
-	local format="$@"
+	local format="$1"
     shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@"
 	echo -e $COL_RESET;
@@ -148,23 +148,6 @@ alert() {
 
 }
 
-try_exit() {
-    if [[ "$SILENT" == 1 ]] ;
-        then return 1
-    fi;
-
-	if [ -z $1 ] ; then
-		ask "Do you want to exit the installer? (y/N) "
-	else
-		ask $1;
-	fi;
-	read VAR_SKIP;
-	if [[ "y" == ${VAR_SKIP,,} || "o" == ${VAR_SKIP,,} ]] ; 
-		then warn "Exiting";
-		exit 1;
-	fi;
-}
-
 
 spacer() {
 	
@@ -175,6 +158,24 @@ spacer() {
 }
 
 ### Various utilities
+
+## Exit
+try_exit() {
+    if [[ "$SILENT" == 1 ]] ;
+        then return 1
+    fi;
+
+	if [ -z $1 ] ; then
+		ask "Do you want to continue the installation? (Y/n)"
+	else
+		ask $1;
+	fi;
+	read VAR_SKIP;
+	if [[ "n" == ${VAR_SKIP,,} ]] ; 
+		then warn "Exiting";
+		exit 1;
+	fi;
+}
 
 ## wraps apt-get
 apt_get() {
@@ -205,7 +206,7 @@ test_ns() {
 	fi;
 	local cmd="$(dig +short A $NS)"
 	if [[ $cmd = "" ]] ; then
-		warn "%s is not a valid domain name" "$NS"
+		alert "%s is not a valid domain name" "$NS"
 	else 
 		info "%s is a valid domain name" "$NS"
 	fi;
@@ -220,7 +221,7 @@ test_local_ip() {
 		fi;
 	done;
 	if [ $VALID = 0 ] ; then 
-		warn "%s doesn't seem to be a valid local ip" "$IP"
+		alert "%s doesn't seem to be a valid local ip" "$IP"
 	fi;
 }
 

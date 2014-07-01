@@ -43,52 +43,62 @@ msgid ""
 "http://www.alternc.org/simpleInstaller"
 msgstr ""
 
-#: ../install.sh:59
+#: ../install.sh:58
 msgid "Debug mode activated."
 msgstr ""
 
-#: ../install.sh:66
+#: ../install.sh:63
 msgid "Dry run mode activated."
 msgstr ""
 
-#: ../install.sh:75
+#: ../install.sh:68
+msgid "Silent mode activated."
+msgstr ""
+
+#: ../install.sh:77
 msgid "Installing mandatory packages"
 msgstr ""
 
-#: ../install.sh:91
+#: ../install.sh:93
 msgid ""
 "You must be root, please authentificate with your user password or run as "
 "root"
 msgstr ""
 
-#: ../install.sh:96
+#: ../install.sh:98
 msgid "Not a DEBIAN system (missing /etc/debian_version)"
 msgstr ""
 
-#: ../install.sh:104
+#: ../install.sh:106
 msgid "This machine is not connected to Internet."
 msgstr ""
 
-#: ../install.sh:110
+#: ../install.sh:112
 msgid "AlternC already installed, nothing to do."
 msgstr ""
 
-#: ../install.sh:120
+#: ../install.sh:122
 msgid ""
 "=====        Your AlternC server needs a public IP Address         =====\n"
 "\n"
 "This makes it available on the web from everywhere in the world."
 msgstr ""
 
-#: ../install.sh:124
+#: ../install.sh:126
 msgid "For your information, here are the internet addresses of this machine:"
 msgstr ""
 
-#: ../install.sh:130
+#: ../install.sh:132
 msgid "Please provide the public IP address"
 msgstr ""
 
-#: ../install.sh:145
+#: ../install.sh:137 ../install.sh:177 ../install.sh:203 ../install.sh:218
+#: ../install.sh:253 ../install.sh:268 ../install.sh:277 ../install.sh:311
+#: ../install.sh:340
+msgid "Missing variable %s for silent install"
+msgstr ""
+
+#: ../install.sh:152
 msgid ""
 "=====              Your AlternC needs a domain name                =====\n"
 "\n"
@@ -111,19 +121,19 @@ msgid ""
 "Your AlternC domain name might then look like 'example.alternc.net'"
 msgstr ""
 
-#: ../install.sh:165
+#: ../install.sh:172
 msgid "Do you want to use AlternC.net domain name service? (Y/n)"
 msgstr ""
 
-#: ../install.sh:187
+#: ../install.sh:199
 msgid "  Please provide your AlternC domain name"
 msgstr ""
 
-#: ../install.sh:197
+#: ../install.sh:214
 msgid "Please provide the AlternC.net subdomain name:"
 msgstr ""
 
-#: ../install.sh:219
+#: ../install.sh:241
 msgid ""
 "=====              Your AlternC needs DNS Servers                =====\n"
 "\n"
@@ -133,23 +143,23 @@ msgid ""
 "highly recommand you the free service we provide (see http://alternc.net )"
 msgstr ""
 
-#: ../install.sh:226
+#: ../install.sh:248
 msgid "Do you want to use AlternC.net name servers ?(Y/n)"
 msgstr ""
 
-#: ../install.sh:235
+#: ../install.sh:262
 msgid "You need two valid nameservers :"
 msgstr ""
 
-#: ../install.sh:237
+#: ../install.sh:264
 msgid "  Please provide your primary NS server"
 msgstr ""
 
-#: ../install.sh:241
+#: ../install.sh:273
 msgid "  Please provide your secondary NS server"
 msgstr ""
 
-#: ../install.sh:261
+#: ../install.sh:298
 msgid ""
 "\n"
 "=====           Optional installation: roundcube webmail           =====\n"
@@ -159,15 +169,15 @@ msgid ""
 "We recommand adding it to your installation.\n"
 msgstr ""
 
-#: ../install.sh:269
+#: ../install.sh:306
 msgid "Would you like to install Roundcube? (Y/n)"
 msgstr ""
 
-#: ../install.sh:280
+#: ../install.sh:322
 msgid "Roundcube added to your configuration"
 msgstr ""
 
-#: ../install.sh:287
+#: ../install.sh:329
 msgid ""
 "\n"
 "=====      Optional installation: mailman mailing list manager     =====\n"
@@ -175,41 +185,41 @@ msgid ""
 "Mailman is the mailing list software proposed by AlternC.\n"
 msgstr ""
 
-#: ../install.sh:293
+#: ../install.sh:335
 msgid "Would you like to install Mailman? (Y/n)"
 msgstr ""
 
-#: ../install.sh:304
+#: ../install.sh:351
 msgid "Mailman added to your configuration"
 msgstr ""
 
-#: ../install.sh:307
+#: ../install.sh:354
 msgid "By default mailman is installed with french and english."
 msgstr ""
 
-#: ../install.sh:308
+#: ../install.sh:355
 msgid "Do you want to use french as default language? (Y/n)"
 msgstr ""
 
-#: ../install.sh:423
+#: ../install.sh:470
 msgid "Editing and backuping your /etc/fstab file"
 msgstr ""
 
-#: ../install.sh:477
+#: ../install.sh:539
 msgid "Something went wrong, could not find the AlternC package in the sources"
 msgstr ""
 
-#: ../install.sh:494
+#: ../install.sh:556
 msgid "Running the alternc.install script"
 msgstr ""
 
-#: ../install.sh:496
+#: ../install.sh:558
 msgid ""
 "Something went wrong with your installation : alternc.install script  not "
 "found."
 msgstr ""
 
-#: ../install.sh:504
+#: ../install.sh:566
 msgid ""
 "An important password has just been generated.\n"
 "\n"
@@ -220,7 +230,7 @@ msgid ""
 "For your information this password is : "
 msgstr ""
 
-#: ../install.sh:537
+#: ../install.sh:599
 msgid "Please remember to change the default authentification : admin/admin"
 msgstr ""
 
@@ -237,90 +247,90 @@ msgstr ""
 msgid "Exiting."
 msgstr ""
 
-#: ../lib_installer.sh:153
-msgid "Do you want to exit the installer? (y/N) "
+#: ../lib_installer.sh:169
+msgid "Do you want to continue the installation? (Y/n)"
 msgstr ""
 
-#: ../lib_installer.sh:184
+#: ../lib_installer.sh:189
 msgid "System should execute %s"
 msgstr ""
 
-#: ../lib_installer.sh:199
+#: ../lib_installer.sh:204
 msgid "missing domain name"
 msgstr ""
 
-#: ../lib_installer.sh:204
+#: ../lib_installer.sh:209
 msgid "%s is not a valid domain name"
 msgstr ""
 
-#: ../lib_installer.sh:206
+#: ../lib_installer.sh:211
 msgid "%s is a valid domain name"
 msgstr ""
 
-#: ../lib_installer.sh:219
+#: ../lib_installer.sh:224
 msgid "%s doesn't seem to be a valid local ip"
-msgstr ""
+msgstr "%s doesn't seem to be a valid IP address"
 
-#: ../lib_installer.sh:269
+#: ../lib_installer.sh:274
 msgid "System copies %s as %s"
 msgstr ""
 
-#: ../lib_installer.sh:272
+#: ../lib_installer.sh:277
 msgid "cp %s %s"
 msgstr ""
 
-#: ../lib_installer.sh:283
+#: ../lib_installer.sh:288
 msgid "System makes sure path for %s  exists"
 msgstr ""
 
-#: ../lib_installer.sh:290
+#: ../lib_installer.sh:295
 msgid "Failed to create %s as it is a file already"
 msgstr ""
 
-#: ../lib_installer.sh:294
+#: ../lib_installer.sh:299
 msgid "Creating folder %s for file %s"
 msgstr ""
 
-#: ../lib_installer.sh:304
+#: ../lib_installer.sh:309
 msgid "System deletes %s"
 msgstr ""
 
-#: ../lib_installer.sh:312
+#: ../lib_installer.sh:317
 msgid "Deleting %s"
 msgstr ""
 
-#: ../lib_installer.sh:324
+#: ../lib_installer.sh:329
 msgid "System writes '%s' \\nin %s"
 msgstr ""
 
-#: ../lib_installer.sh:327
+#: ../lib_installer.sh:332
 msgid "Writing '%s' \\nin %s"
 msgstr ""
 
-#: ../lib_installer.sh:348
+#: ../lib_installer.sh:353
 msgid "Systems inserts '%s' in %s at line #%s"
 msgstr ""
 
-#: ../lib_installer.sh:363
+#: ../lib_installer.sh:368
 msgid "Systems replaces '%s' by %s in %s"
 msgstr ""
 
-#: ../lib_installer.sh:367
+#: ../lib_installer.sh:372
 msgid "Replacing '%s' by %s in %s"
 msgstr ""
 
-#: ../lib_installer.sh:378
+#: ../lib_installer.sh:383
 msgid "Systems makes a backup of %s"
 msgstr ""
 
-#: ../lib_installer.sh:406
+#: ../lib_installer.sh:411
 msgid "Missing service name %s"
 msgstr ""
 
-#: ../lib_installer.sh:422
+#: ../lib_installer.sh:427
 msgid "System edits the fstab to activate acl and quota "
 msgstr ""
 
-#: ../lib_installer.sh:439
+#: ../lib_installer.sh:444
 msgid "%s is not a valid file"
 msgstr ""
