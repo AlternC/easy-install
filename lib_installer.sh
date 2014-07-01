@@ -88,7 +88,7 @@ export TEXTDOMAINDIR=$(pwd)/translations
 debug() {
 
 	echo -e $COL_PURPLE;
-	local format=$1
+	local format="$1"
     shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" # >&1
 	echo -e $COL_RESET;
@@ -97,7 +97,7 @@ debug() {
 misc() {
 	
 	echo -e $COL_GRAY;
-	local format=$1
+	local format="$1"
     shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" # >&1
 	echo -e $COL_RESET;
@@ -115,7 +115,7 @@ ask() {
 info() {
 	
 	echo -e $COL_GREEN;
-	local format=$@
+	local format="$@"
     shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@"
 	echo -e $COL_RESET;
@@ -125,7 +125,7 @@ info() {
 warn() {
 
 	echo -e $COL_RED;
-	local format=$1
+	local format="$1"
 	shift
 	printf "$(gettext -d $TEXTDOMAIN -s "$format")" "$@" 
 	echo -e $COL_RESET;
@@ -135,7 +135,7 @@ warn() {
 alert() {
 
 	echo -e $COL_RED;
-	local format=$1
+	local format="$1"
 	shift
 	printf "\n"
     printf "$(gettext 'A critical error occured: ' )" 
