@@ -239,10 +239,10 @@ debconf() {
 		database="$4"	
 	fi;
 	if [[ $DRY_RUN == 1 ]] ; then
-		debug "[OK] debconf $database %s %s %s" "$1" "$2" "$3"
+		debug "System sets debconf $database %s %s %s" "$1" "$2" "$3"
 	else
 		if [[ $DEBUG == 1 ]] ; then 
-			debug "debconf $database %s %s %s" "$1" "$2" "$3"
+			debug "[OK] debconf $database %s %s %s" "$1" "$2" "$3"
 		fi;	
 		# sets the selection
 		echo "$database $1 $2 $3" | debconf-set-selections

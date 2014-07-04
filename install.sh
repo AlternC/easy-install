@@ -503,7 +503,7 @@ apt_get mysql-server mysql-client
 if [[ "$NIGHTLY" == 1 ]] ; then 
     ALTERNC_SOURCE_TEMPLATE="templates/alternc-easy-install-nightly.list" 
     ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc-easy-install-nightly.list" 
-    ALTERNC_SOURCE_KEY_URL="http://nightly-3-2.alternc.org/nightly.key" 
+    ALTERNC_SOURCE_KEY_URL="http://master.nightly.alternc.org/nightly.key" 
     
 # Or use standard source list. 
 else
@@ -524,7 +524,7 @@ delete $BACKPORTS_SOURCE_LIST_FILE
 copy  $ALTERNC_SOURCE_TEMPLATE $ALTERNC_SOURCE_LIST_FILE
 
 # Creates new  backports sources file if required
-if [[ $SOURCES_USE_BACKPORTS = 1 ]] ; then 
+if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 
     copy "$BACKPORTS_SOURCE_TEMPLATE" $BACKPORTS_SOURCE_LIST_FILE
 fi;
 
