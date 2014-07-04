@@ -279,58 +279,70 @@ msgstr ""
 msgid "cp %s %s"
 msgstr ""
 
-#: ../lib_installer.sh:288
-msgid "System makes sure path for %s  exists"
+#: ../lib_installer.sh:289
+msgid "System makes sure file %s  exists"
+msgstr ""
+
+#: ../lib_installer.sh:292
+msgid "Checking file %s exists"
 msgstr ""
 
 #: ../lib_installer.sh:295
+msgid "File %s does not exist"
+msgstr ""
+
+#: ../lib_installer.sh:304
+msgid "System makes sure path for %s  exists"
+msgstr ""
+
+#: ../lib_installer.sh:311
 msgid "Failed to create %s as it is a file already"
 msgstr ""
 
-#: ../lib_installer.sh:299
+#: ../lib_installer.sh:315
 msgid "Creating folder %s for file %s"
 msgstr ""
 
-#: ../lib_installer.sh:309
+#: ../lib_installer.sh:325
 msgid "System deletes %s"
 msgstr ""
 
-#: ../lib_installer.sh:317
+#: ../lib_installer.sh:333
 msgid "Deleting %s"
 msgstr ""
 
-#: ../lib_installer.sh:329
+#: ../lib_installer.sh:345
 msgid "System writes '%s' \\nin %s"
 msgstr ""
 
-#: ../lib_installer.sh:332
+#: ../lib_installer.sh:348
 msgid "Writing '%s' \\nin %s"
 msgstr ""
 
-#: ../lib_installer.sh:353
+#: ../lib_installer.sh:369
 msgid "Systems inserts '%s' in %s at line #%s"
 msgstr ""
 
-#: ../lib_installer.sh:368
+#: ../lib_installer.sh:384
 msgid "Systems replaces '%s' by %s in %s"
 msgstr ""
 
-#: ../lib_installer.sh:372
+#: ../lib_installer.sh:388
 msgid "Replacing '%s' by %s in %s"
 msgstr ""
 
-#: ../lib_installer.sh:383
+#: ../lib_installer.sh:399
 msgid "Systems makes a backup of %s"
 msgstr ""
 
-#: ../lib_installer.sh:411
+#: ../lib_installer.sh:427
 msgid "Missing service name %s"
 msgstr ""
 
-#: ../lib_installer.sh:427
+#: ../lib_installer.sh:443
 msgid "System edits the fstab to activate acl and quota "
 msgstr ""
 
-#: ../lib_installer.sh:444
+#: ../lib_installer.sh:460
 msgid "%s is not a valid file"
 msgstr ""

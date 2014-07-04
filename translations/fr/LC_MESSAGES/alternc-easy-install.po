@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 14:55+0200\n"
+"POT-Creation-Date: 2014-07-01 15:25+0200\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 #: ../install.sh:22
@@ -136,7 +136,7 @@ msgstr "Merci de fournir l'adresse IP du serveur AlternC"
 #: ../install.sh:253 ../install.sh:268 ../install.sh:277 ../install.sh:311
 #: ../install.sh:340
 msgid "Missing variable %s for silent install"
-msgstr ""
+msgstr "Variable %s manquante pour l'installation silencieuse"
 
 #: ../install.sh:152
 msgid ""
@@ -375,58 +375,70 @@ msgstr "Le système copie %s dans %s"
 msgid "cp %s %s"
 msgstr ""
 
-#: ../lib_installer.sh:288
+#: ../lib_installer.sh:289
+msgid "System makes sure file %s  exists"
+msgstr "Le système d'assure que le chemin pour %s existe"
+
+#: ../lib_installer.sh:292
+msgid "Checking file %s exists"
+msgstr "Vérification que le fichier %s existe"
+
+#: ../lib_installer.sh:295
+msgid "File %s does not exist"
+msgstr "Le fichier %s n'existe pas"
+
+#: ../lib_installer.sh:304
 msgid "System makes sure path for %s  exists"
 msgstr "Le système d'assure que le chemin pour %s existe"
 
-#: ../lib_installer.sh:295
+#: ../lib_installer.sh:311
 msgid "Failed to create %s as it is a file already"
 msgstr "Echec de la création de %s car c'est déjà un fichier"
 
-#: ../lib_installer.sh:299
+#: ../lib_installer.sh:315
 msgid "Creating folder %s for file %s"
 msgstr "Création du dossier %s pour le fichier %s"
 
-#: ../lib_installer.sh:309
+#: ../lib_installer.sh:325
 msgid "System deletes %s"
 msgstr "Le système supprimerait %s"
 
-#: ../lib_installer.sh:317
+#: ../lib_installer.sh:333
 msgid "Deleting %s"
 msgstr "Suppression de %s"
 
-#: ../lib_installer.sh:329
+#: ../lib_installer.sh:345
 msgid "System writes '%s' \\nin %s"
 msgstr "Le système écrit %s \\ndans %s"
 
-#: ../lib_installer.sh:332
+#: ../lib_installer.sh:348
 msgid "Writing '%s' \\nin %s"
 msgstr "Écriture de %s \\ndans %s"
 
-#: ../lib_installer.sh:353
+#: ../lib_installer.sh:369
 msgid "Systems inserts '%s' in %s at line #%s"
 msgstr "Le système insère '%s' dans %s à la ligne #%s"
 
-#: ../lib_installer.sh:368
+#: ../lib_installer.sh:384
 msgid "Systems replaces '%s' by %s in %s"
 msgstr "Le système remplace '%s' par %s dans %s"
 
-#: ../lib_installer.sh:372
+#: ../lib_installer.sh:388
 msgid "Replacing '%s' by %s in %s"
 msgstr "Remplacement de '%s' par %s dans %s"
 
-#: ../lib_installer.sh:383
+#: ../lib_installer.sh:399
 msgid "Systems makes a backup of %s"
 msgstr "Le système fait une sauvegarde de %s"
 
-#: ../lib_installer.sh:411
+#: ../lib_installer.sh:427
 msgid "Missing service name %s"
 msgstr "Nom de service invalide : %s"
 
-#: ../lib_installer.sh:427
+#: ../lib_installer.sh:443
 msgid "System edits the fstab to activate acl and quota "
 msgstr "Le système édite le fichier fstab pour activer les acl et les quota"
 
-#: ../lib_installer.sh:444
+#: ../lib_installer.sh:460
 msgid "%s is not a valid file"
 msgstr "%s n'est pas un fichier valide"
