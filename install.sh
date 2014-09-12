@@ -8,8 +8,14 @@ if [[ $STRICT == 1 ]] ; then
 	set -e
 fi;
 
+# Gettext is a hard dependancy, install it "raw style"
+echo "Installing gettext for translations"
+apt-get install gettext
+
 # Functions 
 . "lib_installer.sh"
+
+
 
 # Local config
 if [ ! -f "config.sh" ] ; then
