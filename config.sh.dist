@@ -9,7 +9,7 @@ STRICT=0
 # Do you want to run in silent mode and not get any questions asked?
 SILENT=0
 # Do you want to use nightly packets - for developers only -
-NIGHLY=0
+NIGHTLY=0
 
 ## if SILENT is equal to 1, you MUST set these variables
 
