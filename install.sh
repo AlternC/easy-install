@@ -502,21 +502,10 @@ apt_get mysql-server mysql-client
 
 
 
-## apt sources
-
-
-# Use nightly source list?
-if [[ "$NIGHTLY" == 1 ]] ; then 
-    ALTERNC_SOURCE_TEMPLATE="templates/alternc-easy-install-nightly.list" 
-    ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc-easy-install-nightly.list" 
-    ALTERNC_SOURCE_KEY_URL="http://master.nightly.alternc.org/nightly.key" 
-    
-# Or use standard source list. 
-else
-    ALTERNC_SOURCE_TEMPLATE="templates/alternc-easy-install.list" 
-    ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc-easy-install.list" 
-    ALTERNC_SOURCE_KEY_URL="http://debian.alternc.org/key.txt" 
-fi
+## apt sources, allows nightly
+ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc.list" 
+ALTERNC_SOURCE_VALUE=${ALTERNC_SOURCE_VALUE:-"deb http://debian.alternc.org/ wheezy main"}
+ALTERNC_SOURCE_KEY_URL=${ALTERNC_SOURCE_KEY_URL:-"http://debian.alternc.org/key.txt"}
 
 # Sets backport source file
 BACKPORTS_SOURCE_LIST_FILE="/etc/apt/sources.list.d/backports-easy-install.list" 
@@ -527,7 +516,7 @@ delete $ALTERNC_SOURCE_LIST_FILE
 delete $BACKPORTS_SOURCE_LIST_FILE
 
 # Creates new debian sources file 
-copy  $ALTERNC_SOURCE_TEMPLATE $ALTERNC_SOURCE_LIST_FILE
+write $ALTERNC_SOURCE_VALUE $ALTERNC_SOURCE_LIST_FILE
 
 # Creates new  backports sources file if required
 if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 

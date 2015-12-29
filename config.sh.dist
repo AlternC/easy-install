@@ -29,3 +29,8 @@ ALTERNC_NS2="%ALTERNC_NS2%"
 INSTALL_ROUNDCUBE="%INSTALL_ROUNDCUBE%"
 # 0/1
 INSTALL_MAILMAN="%INSTALL_MAILMAN%"
+
+# For nightly you will want to set these
+#ALTERNC_SOURCE_VALUE="deb http://master.nightly.alternc.org/ latest/"
+#ALTERNC_SOURCE_KEY_URL="http://master.nightly.alternc.org/nightly.key"
+
