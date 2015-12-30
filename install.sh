@@ -512,11 +512,11 @@ BACKPORTS_SOURCE_LIST_FILE="/etc/apt/sources.list.d/backports-easy-install.list"
 BACKPORTS_SOURCE_TEMPLATE="templates/backports-easy-install.list" 
 
 # Delete source files if exist 
-delete $ALTERNC_SOURCE_LIST_FILE
-delete $BACKPORTS_SOURCE_LIST_FILE
+delete "$ALTERNC_SOURCE_LIST_FILE"
+delete "$BACKPORTS_SOURCE_LIST_FILE"
 
 # Creates new debian sources file 
-write $ALTERNC_SOURCE_VALUE $ALTERNC_SOURCE_LIST_FILE
+write "$ALTERNC_SOURCE_VALUE" "$ALTERNC_SOURCE_LIST_FILE"
 
 # Creates new  backports sources file if required
 if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 
