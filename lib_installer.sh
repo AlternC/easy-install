@@ -1,9 +1,3 @@
-# Versions
-ALTERNC_VERSION="AlternC 3.2"
-DEBIAN_VERSION="Wheezy Debian"
-DEBIAN_VERSION_NUMBER="7"
-
-
 # Colors
 COL_GRAY="\x1b[30;01m"
 COL_RED="\x1b[31;01m"

@@ -41,17 +41,14 @@ spacer
 
 warn "=====                           Warning                            =====
 
-This installation script for AlternC software is made for %s
-running on %s %s.
-
-It attempts at helping people willing to test or install AlternC for 
+This installation script helps to test or install AlternC for 
 the first time and / or don't know so much about Linux, network etc.
 
 Using this script will provide a working installation, but if you need 
 something more specific you might prefer a custom installation.
 
 To learn more about the choices made for this installer, please read 
-http://www.alternc.org/simpleInstaller" "$ALTERNC_VERSION" "$DEBIAN_VERSION" "$DEBIAN_VERSION_NUMBER"
+http://www.alternc.org/simpleInstaller" 
 
 try_exit
 
@@ -99,13 +96,11 @@ if [ $EUID != 0 ] ; then
     alert "You must be root, please authentificate with your user password or run as root";
 fi;
 
-# Exits if wrong debian or debian version
+# Exits if not debian
 if [ ! -f /etc/debian_version ] ; then
     alert "Not a DEBIAN system (missing /etc/debian_version)"
 fi
-if [[ ! $(cat /etc/debian_version) =~ $DEBIAN_VERSION_NUMBER.[[:digit:]] ]] ; then
-    alert "Not a valid DEBIAN system (not a $DEBIAN_VERSION $DEBIAN_VERSION_NUMBER)"
-fi
+
 
 # Exits if no web access
 if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
