@@ -594,9 +594,9 @@ fi
 
 spacer 
 
-info "You can now visit your AlternC on http://$ALTERNC_DESKTOPNAME"
+info "You can now visit your AlternC on http://%s" $ALTERNC_DESKTOPNAME
 
-warn "You should authentificate with: admin/" $ALTERNC_ADMIN_PASSWORD
+warn "You should authentificate with login: admin/%s" $ALTERNC_ADMIN_PASSWORD
 
 # Proposes to send passwords by email
 
