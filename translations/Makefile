@@ -14,7 +14,7 @@ locales: ./en/LC_MESSAGES/alternc-easy-install.mo ./fr/LC_MESSAGES/alternc-easy-
 
 ./%/LC_MESSAGES/alternc-easy-install.po: ./alternc-easy-install.pot
 	[ -r $@ ] || touch $@
-	msgmerge -v -U $@ $^
+	msgmerge -s -v -U $@ $^
 
 ./alternc-easy-install.pot: ../install.sh ../lib_installer.sh 
 	rm -f $@ 

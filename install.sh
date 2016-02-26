@@ -580,13 +580,23 @@ check_service mysqld
 
 ## @todo
 
+# Updates admin password
+RND="`echo -n $RANDOM $RANDOM $RANDOM`"
+/usr/bin/mysql alternc -e "UPDATE membres SET pass=ENCRYPT('$MYSQL_ROOT_PASSWORD',CONCAT('\$1\$',MD5('$RND'))) WHERE uid='2000'"
+if [ $? -eq 0 ] ; then
+    ALTERNC_ADMIN_PASSWORD=$MYSQL_ROOT_PASSWORD
+else
+    ALTERNC_ADMIN_PASSWORD="admin"
+    warn "Caution! Failed to update the default password, change it on first login for security reasons!"
+fi
+
 # Prints passwords 
 
 spacer 
 
 info "You can now visit your AlternC on http://$ALTERNC_DESKTOPNAME"
 
-warn "Please remember to change the default authentification : admin/admin"
+warn "You should authentificate with: admin/" $ALTERNC_ADMIN_PASSWORD
 
 # Proposes to send passwords by email
 
