@@ -209,7 +209,7 @@ test_ns() {
 test_local_ip() {
 	local IP="$1"
 	local VALID=0
-	for ip in  $(ip addr show scope global | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
+	for ip in  $(ip addr show | grep inet | cut -d' ' -f6 | cut -d/ -f1|tr '\n' ' '  ) ; do
 		if [[ "$IP" = "$ip" ]]; then
 			VALID=1
 		fi;
