@@ -246,13 +246,15 @@ debconf() {
 }
 
 
-# gatepoint for all 'y,o' user inputs management
+# gateway for all 'y,o' user inputs management
 validate() {
 	local VAR=$1
 	if [[ "n" == ${VAR,,} ]] ; then
-		return 0;
+		echo 0;
+        return 0;
 	fi;
-	return 1;
+	echo 1;
+    return 1;
 }
 
 # @todo : request a subdomain
