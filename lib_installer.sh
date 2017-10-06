@@ -175,17 +175,17 @@ try_exit() {
 apt_get() {
 	local str=""
 	while (( "$#" )); do
-		str="$str $1"
+		package_list="$str $1"
 		shift
 	done
-	local cmd="apt-get install -y$str"
+	local cmd="apt-get install -y$package_list"
 	if [[ $DRY_RUN = 1 ]] ; then
-		debug "System should execute %s" $str
+		debug "System should execute %s" $package_list
 	else
 		if [[ $DEBUG = 1 ]] ; then 
 			debug "$cmd"
 		fi;	
-		$cmd
+        $cmd || alert "Failed to following package(s): [ $package_list ]"
 	fi;
 }
 
