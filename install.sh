@@ -490,7 +490,7 @@ apt_get mysql-server mysql-client
 ## apt sources, allows nightly
 ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc.list" 
 # If nightly 
-if [ "$NIGHTLY" -eq 0 ]; then
+if [ "$NIGHTLY" == "1" ]; then
     ALTERNC_SOURCE_TEMPLATE="templates/$DEBIAN_RELEASE/alternc-easy-install-nightly.list"
     ALTERNC_SOURCE_KEY_FILE="templates/$DEBIAN_RELEASE/nightly.key"
 else 
