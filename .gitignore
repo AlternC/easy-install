@@ -3,3 +3,4 @@ config.sh
 translations/alternc-easy-install.pot
 test.sh
 /nbproject
+*.swp

@@ -74,20 +74,11 @@ fi;
 
 ### Installer prequisites
 
-
 ## Mandatory packets
-
 misc "Installing mandatory packages"
-
-# Installs dnsutils (mandatory for dig)
-apt_get dnsutils
  
 # Installs inetutils-ping 
-apt_get inetutils-ping
-
-# Installs pwgen password generator
-apt_get pwgen
-
+apt_get dnsutils lsb-release inetutils-ping pwgen
 
 ## Checks debian / net / uid / etc. 
 
@@ -101,6 +92,7 @@ if [ ! -f /etc/debian_version ] ; then
     alert "Not a DEBIAN system (missing /etc/debian_version)"
 fi
 
+DEBIAN_RELEASE=$(lsb_release -cs)
 
 # Exits if no web access
 if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
@@ -142,8 +134,8 @@ fi;
 ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
 
 # Checks if it works
-
-test_local_ip $ALTERNC_PUBLIC_IP
+# It is allowed. Maybe only warn @todo
+#test_local_ip $ALTERNC_PUBLIC_IP
 
 
 ## FQDN
@@ -495,19 +487,24 @@ apt_get postfix postfix-mysql
 apt_get mysql-server mysql-client
 
 
-
-
 ## apt sources, allows nightly
 ALTERNC_SOURCE_LIST_FILE="/etc/apt/sources.list.d/alternc.list" 
-ALTERNC_SOURCE_VALUE=${ALTERNC_SOURCE_VALUE:-"deb http://debian.alternc.org/ wheezy main"}
-ALTERNC_SOURCE_KEY_URL=${ALTERNC_SOURCE_KEY_URL:-"http://debian.alternc.org/key.txt"}
+# If nightly 
+if [ "$NIGHTLY" -eq 0 ]; then
+    ALTERNC_SOURCE_TEMPLATE="templates/$DEBIAN_RELEASE/alternc-easy-install-nightly.list"
+    ALTERNC_SOURCE_KEY_FILE="templates/$DEBIAN_RELEASE/nightly.key"
+else 
+    ALTERNC_SOURCE_TEMPLATE="templates/$DEBIAN_RELEASE/alternc-easy-install.list"
+    ALTERNC_SOURCE_KEY_FILE="templates/$DEBIAN_RELEASE/alternc.key"
+fi
 
 # Sets backport source file
 BACKPORTS_SOURCE_LIST_FILE="/etc/apt/sources.list.d/backports-easy-install.list" 
-BACKPORTS_SOURCE_TEMPLATE="templates/backports-easy-install.list" 
+BACKPORTS_SOURCE_TEMPLATE="templates/$DEBIAN_RELEASE/backports-easy-install.list" 
 
 # Delete source files if exist 
 delete "$ALTERNC_SOURCE_LIST_FILE"
+delete "$ALTERNC_SOURCE_KEY_FILE"
 delete "$BACKPORTS_SOURCE_LIST_FILE"
 
 # Creates new debian sources file 
@@ -519,7 +516,7 @@ if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then
 fi;
 
 # Downloads key
-wget "$ALTERNC_SOURCE_KEY_URL" -O - | apt-key add - 
+wget $(cat "$ALTERNC_SOURCE_KEY_FILE") -O - | apt-key add - 
 
 # Updates
 apt-get update
@@ -546,8 +543,9 @@ fi;
 info "Running the alternc.install script"
 if [[ ! -f /usr/share/alternc/install/alternc.install ]] ; then 
     alert "Something went wrong with your installation : alternc.install script  not found."
-fi;
+else 
 alternc.install
+fi
 
 ## mysql
 
