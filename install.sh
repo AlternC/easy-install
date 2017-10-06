@@ -453,11 +453,8 @@ replace "%ALTERNC_PHPMYADMIN_USERPASSWORD%" "$ALTERNC_PHPMYADMIN_USERPASSWORD" "
 
 ## FS 
 
-# Installs acl
-apt_get acl
-
-# Install quota
-apt_get quota
+# Installs acl quota
+apt_get acl quota
 
 # Backups fstab
 misc "Editing and backuping your /etc/fstab file"
