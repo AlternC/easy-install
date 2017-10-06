@@ -504,7 +504,6 @@ BACKPORTS_SOURCE_TEMPLATE="templates/$DEBIAN_RELEASE/backports-easy-install.list
 
 # Delete source files if exist 
 delete "$ALTERNC_SOURCE_LIST_FILE"
-delete "$ALTERNC_SOURCE_KEY_FILE"
 delete "$BACKPORTS_SOURCE_LIST_FILE"
 
 # Creates new debian sources file 
