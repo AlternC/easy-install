@@ -10,7 +10,7 @@ fi;
 
 # Gettext is a hard dependancy, install it "raw style"
 echo "Installing gettext for translations"
-apt-get install gettext
+which gettext &>/dev/null || apt-get install --force-yes -y gettext || { echo "[!] Exit: Failed to install gettext"; exit 1; }
 
 # Functions 
 . "lib_installer.sh"
@@ -77,7 +77,7 @@ fi;
 ## Mandatory packets
 misc "Installing mandatory packages"
  
-# Installs inetutils-ping 
+# Installs various packages required to work
 apt_get dnsutils lsb-release inetutils-ping pwgen
 
 ## Checks debian / net / uid / etc. 
