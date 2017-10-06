@@ -1,0 +1,2 @@
+deb http://debian.alternc.org/ jessie main
+deb-src http://debian.alternc.org/ jessie main

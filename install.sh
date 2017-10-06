@@ -508,7 +508,7 @@ delete "$ALTERNC_SOURCE_KEY_FILE"
 delete "$BACKPORTS_SOURCE_LIST_FILE"
 
 # Creates new debian sources file 
-write "$ALTERNC_SOURCE_VALUE" "$ALTERNC_SOURCE_LIST_FILE"
+copy $ALTERNC_SOURCE_TEMPLATE "$ALTERNC_SOURCE_LIST_FILE"
 
 # Creates new  backports sources file if required
 if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 
@@ -534,7 +534,7 @@ apt_get alternc
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
-	apt_get -t squeeze-backports $ADDITIONAL_PACKAGES
+    apt_get -t ${DEBIAN_RELEASE}-backports $ADDITIONAL_PACKAGES
 fi;
 
 ### Post install
