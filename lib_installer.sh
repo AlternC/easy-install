@@ -175,7 +175,7 @@ try_exit() {
 apt_get() {
 	local str=""
 	while (( "$#" )); do
-		package_list="$str $1"
+		package_list="$package_list $1"
 		shift
 	done
 	local cmd="apt-get install -y$package_list"
