@@ -5,7 +5,7 @@
 
 # Exit if any error occurs
 if [[ $STRICT == 1 ]] ; then
-	set -e
+    set -e
 fi;
 
 # Gettext is a hard dependancy, install it "raw style"
@@ -14,8 +14,6 @@ which gettext &>/dev/null || apt-get install --force-yes -y gettext || { echo "[
 
 # Functions 
 . "lib_installer.sh"
-
-
 
 # Local config
 if [ ! -f "config.sh" ] ; then
@@ -102,7 +100,7 @@ fi
 # Exits if alternc present 
 
 if [[ $(dpkg-query -W -f='${Status}' alternc 2>/dev/null | grep -c "ok installed") == 1 ]] ; then 
-	alert "AlternC already installed, nothing to do." ; 
+    alert "AlternC already installed, nothing to do." ; 
 fi;
 
 
@@ -201,7 +199,7 @@ fi;
  
 # run the alterc.net api client
 else
-	#todo 
+    #todo 
     alternc_net_get_domain
 
     ask "Please provide the AlternC.net subdomain name:"
@@ -346,13 +344,13 @@ if [[ "$check" == 1 ]] ; then
     # Asks language
     misc "By default mailman is installed with french and english."
     ask "Do you want to use french as default language? (Y/n)"
-	read MAILMAN_USE_FRENCH
-	check=$(validate $MAILMAN_USE_FRENCH)    
-	
-	# Switches default mailman language to english
-	if [[ $check == 0 ]] ; then
-		ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="en"
-	fi;
+    read MAILMAN_USE_FRENCH
+    check=$(validate $MAILMAN_USE_FRENCH)    
+    
+    # Switches default mailman language to english
+    if [[ $check == 0 ]] ; then
+        ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="en"
+    fi;
     
 fi
 
