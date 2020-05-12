@@ -76,7 +76,7 @@ fi;
 misc "Installing mandatory packages"
  
 # Installs various packages required to work
-apt_get dnsutils lsb-release inetutils-ping pwgen
+apt_get dnsutils lsb-release inetutils-ping pwgen gnupg2
 
 ## Checks debian / net / uid / etc. 
 
@@ -479,7 +479,7 @@ apt_get postfix postfix-mysql
 
 
 # Installs mysql 
-apt_get mysql-server mysql-client
+apt_get mariadb-server mariadb-client
 
 
 ## apt sources, allows nightly
@@ -522,6 +522,10 @@ fi;
 
 
 ### AlternC install
+
+# dirty fix for buster
+apt install -y --no-install-recommends -t buster-backports phpmyadmin php-twig
+
 
 # Starts the AlternC install 
 apt_get alternc
