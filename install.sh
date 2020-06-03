@@ -284,75 +284,75 @@ fi
 
 # Asks if roundcube is required
 
-spacer
-
-info "
-=====           Optional installation: roundcube webmail           =====
-
-Roundcube is the webmail software proposed by AlternC.
-
-We recommand adding it to your installation.
-"
-
-ask "Would you like to install Roundcube? (Y/n)"
-
-if [[ "$SILENT" != 1 ]] ;
-    then read INSTALL_ROUNDCUBE
-    else if [[ -z $INSTALL_ROUNDCUBE ]] ; then
-        alert "Missing variable %s for silent install" "INSTALL_ROUNDCUBE"
-    fi
-fi;
-
-check=$(validate $INSTALL_ROUNDCUBE)
-
-# User wants to add roundcube
-if [[ "$check" == 1 ]] ; then
-
-    SOURCES_USE_BACKPORTS=1
-    ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
-    info "Roundcube added to your configuration"
-    
-fi
-
-# Asks if mailman is required
-spacer
-
-info "
-=====      Optional installation: mailman mailing list manager     =====
-
-Mailman is the mailing list software proposed by AlternC.
-"
-
-ask "Would you like to install Mailman? (Y/n)"
-
-if [[ "$SILENT" != 1 ]] ;
-    then read INSTALL_MAILMAN
-    else if [[ -z $INSTALL_MAILMAN ]] ; then
-        alert "Missing variable %s for silent install" "INSTALL_MAILMAN"
-    fi
-fi;
-
-check=$(validate $INSTALL_MAILMAN)
-
-# User wants to add mailman
-if [[ "$check" == 1 ]] ; then
-
-    ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
-    
-    info "Mailman added to your configuration"
-    
-    # Asks language
-    misc "By default mailman is installed with french and english."
-    ask "Do you want to use french as default language? (Y/n)"
-    read MAILMAN_USE_FRENCH
-    check=$(validate $MAILMAN_USE_FRENCH)    
-    
-    # Switches default mailman language to english
-    if [[ $check == 0 ]] ; then
-        ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="en"
-    fi;
-    
-fi
+#### spacer
+#### 
+#### info "
+#### =====           Optional installation: roundcube webmail           =====
+#### 
+#### Roundcube is the webmail software proposed by AlternC.
+#### 
+#### We recommand adding it to your installation.
+#### "
+#### 
+#### ask "Would you like to install Roundcube? (Y/n)"
+#### 
+#### if [[ "$SILENT" != 1 ]] ;
+####     then read INSTALL_ROUNDCUBE
+####     else if [[ -z $INSTALL_ROUNDCUBE ]] ; then
+####         alert "Missing variable %s for silent install" "INSTALL_ROUNDCUBE"
+####     fi
+#### fi;
+#### 
+#### check=$(validate $INSTALL_ROUNDCUBE)
+#### 
+#### # User wants to add roundcube
+#### if [[ "$check" == 1 ]] ; then
+#### 
+####     SOURCES_USE_BACKPORTS=1
+####     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
+####     info "Roundcube added to your configuration"
+####     
+#### fi
+#### 
+#### # Asks if mailman is required
+#### spacer
+#### 
+#### info "
+#### =====      Optional installation: mailman mailing list manager     =====
+#### 
+#### Mailman is the mailing list software proposed by AlternC.
+#### "
+#### 
+#### ask "Would you like to install Mailman? (Y/n)"
+#### 
+#### if [[ "$SILENT" != 1 ]] ;
+####     then read INSTALL_MAILMAN
+####     else if [[ -z $INSTALL_MAILMAN ]] ; then
+####         alert "Missing variable %s for silent install" "INSTALL_MAILMAN"
+####     fi
+#### fi;
+#### 
+#### check=$(validate $INSTALL_MAILMAN)
+#### 
+#### # User wants to add mailman
+#### if [[ "$check" == 1 ]] ; then
+#### 
+####     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
+####     
+####     info "Mailman added to your configuration"
+####     
+####     # Asks language
+####     misc "By default mailman is installed with french and english."
+####     ask "Do you want to use french as default language? (Y/n)"
+####     read MAILMAN_USE_FRENCH
+####     check=$(validate $MAILMAN_USE_FRENCH)    
+####     
+####     # Switches default mailman language to english
+####     if [[ $check == 0 ]] ; then
+####         ALTERNC_MAILMAN_DEFAULT_SERVER_LANGUAGE="en"
+####     fi;
+####     
+#### fi
 
 ### Mysql password
 
@@ -505,9 +505,9 @@ delete "$BACKPORTS_SOURCE_LIST_FILE"
 copy $ALTERNC_SOURCE_TEMPLATE "$ALTERNC_SOURCE_LIST_FILE"
 
 # Creates new  backports sources file if required
-if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 
+# if [[ "$SOURCES_USE_BACKPORTS" = 1 ]] ; then 
     copy "$BACKPORTS_SOURCE_TEMPLATE" $BACKPORTS_SOURCE_LIST_FILE
-fi;
+#fi;
 
 # Downloads key
 wget $(cat "$ALTERNC_SOURCE_KEY_FILE") -O - | apt-key add - 
