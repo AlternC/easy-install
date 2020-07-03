@@ -141,41 +141,41 @@ ALTERNC_INTERNAL_IP=$ALTERNC_PUBLIC_IP
 
 ## FQDN
 
-spacer
-
-info "=====              Your AlternC needs a domain name                =====
-
-This domain name will be used to access the panel and send/receive mail.
-                                         
-You must use an original domain name dedicated for this purpose.
-In other words, do not use a domain name intended to be your company or 
-personal website. 
-For example, 'example.com' is not good, unless your company is the 
-hosting service by itself. 'panel.example.com' will work better, 
-allowing you to still have your website on 'www.example.com'
-
-If you are unsure, here are a few solutions: 
-1.  Create a subdomain dedicated to AlternC on a domain name you own
-2.  Use the free AlternC.net domain name service      
-        
-We recommand using the AlternC.net subdomain name if you are new to this.
-You'll only need to request your subdomain on http://www.alternc.net and 
-point it to the IP address you just provided.
-Your AlternC domain name might then look like 'example.alternc.net'"
-
-ask "Do you want to use AlternC.net domain name service? (Y/n)"
-
-if [[ "$SILENT" != 1 ]] ;
-    then read VAR_USE_ALTERNC_SUBDOMAIN
-    else if [[ -z $VAR_USE_ALTERNC_SUBDOMAIN ]] ; then
-        alert "Missing variable %s for silent install" "VAR_USE_ALTERNC_SUBDOMAIN"
-    fi
-fi;
-
-check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
-
-# Wants to use own domain name
-if [[ $check=0 ]] ; then
+#### spacer
+#### 
+#### info "=====              Your AlternC needs a domain name                =====
+#### 
+#### This domain name will be used to access the panel and send/receive mail.
+####                                          
+#### You must use an original domain name dedicated for this purpose.
+#### In other words, do not use a domain name intended to be your company or 
+#### personal website. 
+#### For example, 'example.com' is not good, unless your company is the 
+#### hosting service by itself. 'panel.example.com' will work better, 
+#### allowing you to still have your website on 'www.example.com'
+#### 
+#### If you are unsure, here are a few solutions: 
+#### 1.  Create a subdomain dedicated to AlternC on a domain name you own
+#### 2.  Use the free AlternC.net domain name service      
+####         
+#### We recommand using the AlternC.net subdomain name if you are new to this.
+#### You'll only need to request your subdomain on http://www.alternc.net and 
+#### point it to the IP address you just provided.
+#### Your AlternC domain name might then look like 'example.alternc.net'"
+#### 
+#### ask "Do you want to use AlternC.net domain name service? (Y/n)"
+#### 
+#### if [[ "$SILENT" != 1 ]] ;
+####     then read VAR_USE_ALTERNC_SUBDOMAIN
+####     else if [[ -z $VAR_USE_ALTERNC_SUBDOMAIN ]] ; then
+####         alert "Missing variable %s for silent install" "VAR_USE_ALTERNC_SUBDOMAIN"
+####     fi
+#### fi;
+#### 
+#### check=$(validate $VAR_USE_ALTERNC_SUBDOMAIN)
+#### 
+#### # Wants to use own domain name
+#### if [[ $check=0 ]] ; then
 
     # Reads the hostname
     if [ -f /etc/hostname ] ; then
@@ -200,21 +200,21 @@ fi;
     test_ns "$ALTERNC_DESKTOPNAME"
     
  
-# run the alterc.net api client
-else
-    #todo 
-    alternc_net_get_domain
-
-    ask "Please provide the AlternC.net subdomain name:"
-    if [[ "$SILENT" != 1 ]] ;
-        then read ALTERNC_DESKTOPNAME
-        else if [[ -z $ALTERNC_DESKTOPNAME ]] ; then
-            alert "Missing variable %s for silent install" "ALTERNC_DESKTOPNAME"
-        fi
-    fi;
-    test_ns "$ALTERNC_DESKTOPNAME"
-    
-fi
+#### # run the alterc.net api client
+#### else
+####     #todo 
+####     alternc_net_get_domain
+#### 
+####     ask "Please provide the AlternC.net subdomain name:"
+####     if [[ "$SILENT" != 1 ]] ;
+####         then read ALTERNC_DESKTOPNAME
+####         else if [[ -z $ALTERNC_DESKTOPNAME ]] ; then
+####             alert "Missing variable %s for silent install" "ALTERNC_DESKTOPNAME"
+####         fi
+####     fi;
+####     test_ns "$ALTERNC_DESKTOPNAME"
+####     
+#### fi
 
 # Sets the mailname 
 ALTERNC_POSTFIX_MAILNAME="$ALTERNC_DESKTOPNAME"
