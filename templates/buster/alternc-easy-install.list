@@ -1,1 +1,2 @@
 deb http://debian.koumbit.net/debian alternc35 main
+deb [trusted=yes] https://dl.bintray.com/alternc/stable stable main
