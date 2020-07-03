@@ -312,7 +312,7 @@ fi
 #### if [[ "$check" == 1 ]] ; then
 #### 
 ####     SOURCES_USE_BACKPORTS=1
-####     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-roundcube"
+####     ADDITIONAL_PACKAGES+=(alternc-roundcube)
 ####     info "Roundcube added to your configuration"
 ####     
 #### fi
@@ -340,7 +340,7 @@ fi
 #### # User wants to add mailman
 #### if [[ "$check" == 1 ]] ; then
 #### 
-####     ADDITIONAL_PACKAGES="$ADDITIONAL_PACKAGES alternc-mailman"
+####     ADDITIONAL_PACKAGES+=(alternc-mailman)
 ####     
 ####     info "Mailman added to your configuration"
 ####     
@@ -527,15 +527,14 @@ fi;
 ### AlternC install
 
 # dirty fix for buster
-apt install -y --no-install-recommends -t buster-backports phpmyadmin php-twig
-
+ADDITIONAL_PACKAGES+=(phpmyadmin php-twig)
 
 # Starts the AlternC install 
-apt_get alternc
+apt_get alternc alternc-ssl-provider-letsencrypt
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
-    apt_get -t ${DEBIAN_RELEASE}-backports $ADDITIONAL_PACKAGES
+    apt_get -t ${DEBIAN_RELEASE}-backports ${ADDITIONAL_PACKAGES[@]}
 fi;
 
 ### Post install
