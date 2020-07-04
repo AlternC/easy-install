@@ -527,10 +527,10 @@ fi;
 ### AlternC install
 
 # dirty fix for buster
-ADDITIONAL_PACKAGES+=(phpmyadmin php-twig)
+apt_get -t ${DEBIAN_RELEASE}-backports phpmyadmin php-twig
 
 # Starts the AlternC install 
-apt_get alternc alternc-ssl-provider-letsencrypt
+apt_get alternc alternc-certbot
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
