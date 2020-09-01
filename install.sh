@@ -192,7 +192,7 @@ if [[ "$SILENT" != 1 ]] ;
         alert "Missing variable %s for silent install" "ALTERNC_DESKTOPNAME"
     fi
 fi;
-    test_ns "$ALTERNC_DESKTOPNAME"
+    #test_ns "$ALTERNC_DESKTOPNAME"
     
  
 #### # run the alterc.net api client
