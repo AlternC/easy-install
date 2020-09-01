@@ -95,11 +95,6 @@ fi
 
 DEBIAN_RELEASE=$(lsb_release -cs)
 
-# Exits if no web access
-if ! ping -q -c 1 -W 3 $VAR_TEST_IP 2>&1 > /dev/null; then
-    alert "This machine is not connected to Internet."
-fi
-
 # Exits if alternc present 
 
 if [[ $(dpkg-query -W -f='${Status}' alternc 2>/dev/null | grep -c "ok installed") == 1 ]] ; then 
