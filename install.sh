@@ -525,7 +525,7 @@ fi;
 apt_get -t ${DEBIAN_RELEASE}-backports phpmyadmin php-twig
 
 # Starts the AlternC install 
-apt_get alternc alternc-certbot
+apt_get alternc alternc-certificate-provider-letsencrypt
 
 # Adds additional packages if required
 if [[ $ADDITIONAL_PACKAGES != "" ]] ; then  
