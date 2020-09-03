@@ -76,7 +76,7 @@ fi;
 misc "Installing mandatory packages"
  
 # Installs various packages required to work
-apt_get apache2 apache2-bin libapache2-mpm-itk dnsutils lsb-release inetutils-ping pwgen gnupg2
+apt_get apache2 apache2-bin libapache2-mpm-itk dnsutils lsb-release inetutils-ping pwgen gnupg2 wget
 
 # Manually disable mpm event
 a2dismod mpm_event 
